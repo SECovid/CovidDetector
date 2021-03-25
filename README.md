@@ -1,6 +1,6 @@
 # Covid Detector
 
-Covid Detector is a webapp which can use cough recordings to estimate the likelihood of having COVID-19
+Covid Detector is a webapp which can use cough recordings to estimate the likelihood of a person having COVID-19
 
 ## Requirements
 
