@@ -40,7 +40,6 @@ def find_cough_start(spectrogram):
 
         #If enough consecutive time periods have indications of a cough
         if(counter == number_of_periods):
-          print('Returning ',(i-number_of_periods))
           return i-number_of_periods+1
 
     return 0
