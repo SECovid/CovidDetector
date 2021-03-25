@@ -10,6 +10,7 @@ def create_model(training_data, training_labels):
             32,
             (2, 2),
             activation='relu',
+            #Or training_data.shape[1], training_data.shape[2]
             input_shape=(FREQ_BINS, TIME_PERIODS, 1)
         )
     )
