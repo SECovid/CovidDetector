@@ -1,7 +1,7 @@
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
-
+from librosa import display
 from .preprocessing import preprocess_cough
 
 FRAME_SIZE = 2048
@@ -22,8 +22,8 @@ def audio_to_spectrogram(audio_wav):
 
 
 
-def plot_spectrogram(Y, sr, hop_length, y_axis='linear'):
+def plot_spectrogram(Y, sr=SR, hop_length=HOP_SIZE, y_axis='linear'):
   plt.figure(figsize=(25,10))
   librosa.display.specshow(Y,sr=sr,hop_length=hop_length,x_axis="time",y_axis=y_axis)
   plt.colorbar(format="%+2.f")
-  #plt.show()
+  plt.show()
