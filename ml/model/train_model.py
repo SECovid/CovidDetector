@@ -1,4 +1,5 @@
 from tensorflow.keras import Sequential, layers
+from ml.model import log
 #TODO: Change them and make them automatic / maybe env variables
 FREQ_BINS = 1025
 TIME_PERIODS = 69
@@ -53,3 +54,6 @@ def create_model(training_data, training_labels):
 
 
     model.save('./CNN_COUGH_COVID_DETECTOR_MODEL_tf', save_format='tf')
+
+    #Add log file containing: Size of training data, accuracy and other metrics
+    log.modelLogs(history='',size='')

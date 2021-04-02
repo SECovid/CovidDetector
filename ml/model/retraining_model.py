@@ -1,5 +1,5 @@
 from ml.data import dataset
-
+import datetime as dt
 import numpy as np
 
 def retraining_pipeline(date = '01/01/1970'):
@@ -8,6 +8,19 @@ def retraining_pipeline(date = '01/01/1970'):
     # Check if enough new data
     print(len(data))
 
+    # Extract previous model's training size
+    import json
+    today = dt.date.today()
+    d1 = today.strftime("%d-%m-%Y")
+    with open('logs/'+d1+'.json') as json_file:
+        data = json.load(json_file)
+        for p in data['people']:
+            print('Name: ' + p['name'])
+            print('Website: ' + p['website'])
+            print('From: ' + p['from'])
+            print('')
+
+    #Compare new size with old size and check if enough
 
 
     #Transform into two arrays
