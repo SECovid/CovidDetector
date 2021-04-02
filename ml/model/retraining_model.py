@@ -1,9 +1,30 @@
+from ml.data import dataset
+
+import numpy as np
+
+def retraining_pipeline(date = '01/01/1970'):
+    # Get data
+    data = dataset.get_all_data(date)
+    # Check if enough new data
+    print(len(data))
 
 
-def retraining_pipeline():
-    # Check if enough data
+
+    #Transform into two arrays
+    labels = np.array([datapoint['label'] for datapoint in data])
+    #Retrieving all spectrograms and reshaping them to numpy arrays
+    spectrograms = np.reshape(np.array([np.frombuffer(datapoint['spectrogram'],dtype=np.float32) for datapoint in data]),(-1,1025,69))
+
     # Check if balanced
 
-    # Get data
+
+
     # import train model and train the model
+    from ml.model import train_model
+    #Reshaping spectrograms for training
+    spectrograms = np.reshape(spectrograms, (spectrograms.shape[0], spectrograms.shape[1], spectrograms.shape[2], 1))
+    #train_model.create_model(spectrograms,labels)
     pass
+
+if __name__ == "__main__":
+    retraining_pipeline()

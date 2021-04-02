@@ -14,7 +14,7 @@ def get_all_data(date = '01/01/1970'):
     #print(d1)
     #print(data['date'])
     #print(dt.datetime.strptime(d1,"%d/%m/%Y")<dt.datetime.strptime(data['date'],"%d/%m/%Y"))
-    return data
+    return [data,data]
 #Insert a data point
 def insert_data(spectrogram, medical_test_result, date):
     # date should be in dd/mm/YY
