@@ -1,8 +1,8 @@
 from ml.spectogram import audio_processing
 from ml.model import retraining_model
 from ml.data import dataset
-
-def add_medical_test_to_dataset(audio_wav, medical_test_result, date):
+import datetime as dt
+def add_medical_test_to_dataset(audio_wav, medical_test_result, date = dt.datetime.utcnow()):
     spectrogram = audio_processing.audio_to_spectrogram(audio_wav)
 
     ##Add to nosql db
