@@ -2,11 +2,11 @@ import json
 import datetime as dt
 def modelLogs(history,size):
 
-    currentTime = dt.datetime.now()
+    currentTime = dt.datetime.utcnow()
     fileDate = currentTime.strftime("%d-%m-%Y-%H-%M-%S")
 
     data = {}
-    data['date'] =  fileDate
+    data['date'] =  currentTime
     data['training_size'] = size
     data['accuracy'] = history.history['accuracy']
     data['loss'] = history.history['loss']
