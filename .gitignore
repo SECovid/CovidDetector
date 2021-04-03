@@ -154,3 +154,4 @@ fabric.properties
 #App specific
 MyModelNormalized_tf
 *.wav
+CNN_COUGH_COVID_DETECTOR_MODEL_tf

@@ -1,20 +1,20 @@
 from pymongo import MongoClient
 import datetime as dt
-cluster = MongoClient("mongodb+srv://dbUser:coughdetectoracg@softwareengineeringcovi.qbeqs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+cluster = MongoClient('mongodb://localhost:27017/')
 
 db = cluster["CovidDetector"]
 collection = db["CoughDataset"]
 
 #Get all data to a specific date
 def get_all_data(date = '01/01/1970'):
-    data = collection.find_one()#Should be replaced with find all and based on date
+    data = collection.find()#Should be replaced with find all and based on date
     #today = dt.date.today() + dt.timedelta(days=1)
     # dd/mm/YY
     #d1 = today.strftime("%d/%m/%Y")
     #print(d1)
     #print(data['date'])
     #print(dt.datetime.strptime(d1,"%d/%m/%Y")<dt.datetime.strptime(data['date'],"%d/%m/%Y"))
-    return [data,data]
+    return data
 #Insert a data point
 def insert_data(spectrogram, medical_test_result, date):
     # date should be in dd/mm/YY

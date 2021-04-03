@@ -6,23 +6,10 @@ def modelLogs(history,size):
     d1 = today.strftime("%d-%m-%Y")
 
     data = {}
-    data['people'] = []
-    data['people'].append({
-        'name': 'Scott',
-        'website': 'stackabuse.com',
-        'from': 'Nebraska'
-    })
-    data['people'].append({
-        'name': 'Larry',
-        'website': 'google.com',
-        'from': 'Michigan'
-    })
-    data['people'].append({
-        'name': 'Tim',
-        'website': 'apple.com',
-        'from': 'Alabama'
-    })
-
+    data['date'] =  d1
+    data['training_size'] = size
+    data['accuracy'] = history.history['accuracy']
+    data['loss'] = history.history['loss']
     #Choose a more meaningful name (Maybe more than one training per day)
     with open('logs/'+d1+'.json', 'w') as outfile:
         json.dump(data, outfile)

@@ -5,6 +5,7 @@ FREQ_BINS = 1025
 TIME_PERIODS = 69
 
 def create_model(training_data, training_labels):
+    print('Creating new model ...')
     model = Sequential()
     model.add(
         layers.Conv2D(
@@ -52,8 +53,9 @@ def create_model(training_data, training_labels):
         verbose=1
     )
 
-
-    model.save('./CNN_COUGH_COVID_DETECTOR_MODEL_tf', save_format='tf')
-
+    print('Done training ...')
+    model.save('trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf', save_format='tf')
+    print('Model saved ...')
     #Add log file containing: Size of training data, accuracy and other metrics
-    log.modelLogs(history='',size='')
+    log.modelLogs(history=history,size=training_data.shape[0])
+    print('Log created ...')
