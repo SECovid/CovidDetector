@@ -20,7 +20,7 @@ def getSizeFromLogs():
     #Get latest logs
     list_of_files = glob.glob('logs/*.json')  # * means all if need specific format then *.csv
     latest_file = max(list_of_files, key=os.path.getctime)
-    print(latest_file)
+    print('Latest log: ',latest_file)
 
     with open(latest_file) as json_file:
         data = json.load(json_file)
