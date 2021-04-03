@@ -4,7 +4,7 @@ import numpy as np
 from ml.model import log
 import random
 
-def retraining_pipeline(date='01/01/1970'):
+def retraining_pipeline(date=dt.datetime.utcnow()):
     # Get data
     data = list(dataset.get_all_data(date))
     random.shuffle(data)

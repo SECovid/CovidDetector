@@ -16,9 +16,9 @@ def insert_data(spectrogram, medical_test_result, date = dt.datetime.utcnow()):
     pass
 
 #Delete a specific data point
-def delete_data():
-    #Should make it more meaningful
-    collection.delete_one({"something":"something"})
+def delete_data(_id):
+    #Needs testing
+    collection.delete_one({"_id":_id})
     pass
 
 #Delete all data from a specific date till now
