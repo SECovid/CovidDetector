@@ -3,7 +3,7 @@ import datetime as dt
 def modelLogs(history,size):
 
     currentTime = dt.datetime.utcnow()
-    fileDate = currentTime.strftime("%d-%m-%Y-%H-%M-%S")
+    fileDate = currentTime
 
     data = {}
     data['date'] =  currentTime
