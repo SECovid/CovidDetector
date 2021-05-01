@@ -1,9 +1,16 @@
 import os
-
+import base64
 from flask import Flask
 import tensorflow as tf
 from ml.prediction import predict_covid
 from ml.spectogram import audio_processing
+from backend.make_prediction import make_prediction_blueprint
+from flask_cors import CORS
+
+
+
+
+
 def create_app(test_config=None):
 
     # create and configure the app
@@ -12,6 +19,7 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+    CORS(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -26,6 +34,8 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    app.register_blueprint(make_prediction_blueprint, url_prefix='/prediction')
+
     # a simple page that says hello
     @app.route('/hello')
     def hello():
@@ -35,6 +45,12 @@ def create_app(test_config=None):
     model = tf.keras.models.load_model('ml/model/trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf')
     @app.route('/test')
     def test():
+        #encode_string = base64.b64encode(open('backend/charbel.wav', "rb").read())
+       # print(encode_string)
+       # wav_file = open("temp.wav", "wb")
+        #decode_string = base64.b64decode(encode_string)
+        #wav_file.write(decode_string)
+        #spectrogram = audio_processing.audio_to_spectrogram('temp.wav')
         spectrogram = audio_processing.audio_to_spectrogram('backend/charbel.wav')
         result = predict_covid.make_fast_prediction(spectrogram,model)
         return str(result)
