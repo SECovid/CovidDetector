@@ -13,6 +13,8 @@ def upload_medical_test():
     try:
         encoded_string = request.json['data']
         test_result = request.json['test_result']
+
+
         temp_filename = "temp.wav"
         wav_file = open(temp_filename, "wb")
         decoded_string = base64.b64decode(encoded_string)

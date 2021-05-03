@@ -2,6 +2,8 @@ from flask import Blueprint
 from ml.prediction import predict_covid
 from ml.spectogram import audio_processing
 from flask import Flask, request, jsonify
+from backend import authentication
+from backend import database
 import tensorflow as tf
 import base64
 import os
@@ -14,6 +16,7 @@ make_prediction_blueprint = Blueprint('make_prediction', __name__)
 def make_fast_prediction():
     try:
         encoded_string = request.json['data']
+
         temp_filename = "temp.wav"
         wav_file = open(temp_filename, "wb")
         decoded_string = base64.b64decode(encoded_string)
@@ -22,11 +25,17 @@ def make_fast_prediction():
         result = predict_covid.make_fast_prediction(spectrogram, model)
         wav_file.close()
         if os.path.exists(temp_filename):
-            os.remove(temp_filename)
+            print('CLOSING')
+           # os.remove(temp_filename)
         else:
             print("The file does not exist")
-            # If logged in should add it to history
 
+        # If logged in should add it to history
+        if(authentication.isLoggedIn(request)):
+            user_id = authentication.isLoggedIn(request)['id']
+            request.json['user_id'] = user_id
+            request.json['covid_percentage'] = result[0]
+            database.add_covid_report(request.json)
         return json.dumps({"results": result.tolist()})
 
     except NameError:
@@ -57,8 +66,15 @@ def make_accurate_prediction():
             else:
                 print("The file does not exist")
         result = predict_covid.make_accurate_prediction(spectrograms,model)
+
+        # If logged in should add it to history
+        if(authentication.isLoggedIn(request)):
+            user_id = authentication.isLoggedIn(request)['id']
+            request.json['user_id'] = user_id
+            request.json['covid_percentage'] = result[0]
+            database.add_covid_report(request.json)
+
         return json.dumps({"results": result.tolist()})
-    # If logged in should add it to history
     except:
         return json.dumps({"results": []})
 

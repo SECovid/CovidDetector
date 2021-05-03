@@ -8,9 +8,17 @@ from backend import database
 auth_blueprint = Blueprint('auth', __name__)
 
 @auth_blueprint.route('/login',methods=['POST'])
-def post():
+def login():
     # get the post data
-    isLoggedIn(request)
+    if isLoggedIn(request):
+        print("Logged in already")
+        responseObject = {
+            'status': 'fail',
+            'message': 'Already logged in'
+        }
+        return make_response(jsonify(responseObject)), 406
+
+
     post_data = request.json
     try:
         # Check if correct pass
@@ -60,7 +68,7 @@ def post():
 
 
 @auth_blueprint.route('/register',methods=['POST'])
-def reg():
+def register():
     post_data = request.json
     try:
         post_data["password"] = bcrypt.hashpw(post_data["password"].encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
@@ -85,6 +93,7 @@ def reg():
 def isLoggedIn(request):
     # get the auth token
     auth_header = request.headers.get('Authorization')
+    print('AUTH HEADER', auth_header)
     if auth_header:
         auth_token = auth_header.split(" ")[1]
     else:
@@ -94,12 +103,7 @@ def isLoggedIn(request):
         return resp
     else:
         print('NO TOKEN')
-        return ''
-
-
-
-
-
+        return
 
 
 def encode_auth_token(user_id,username,role):
@@ -122,8 +126,6 @@ def encode_auth_token(user_id,username,role):
         )
     except Exception as e:
         return e
-
-
 
 
 def decode_auth_token(auth_token):
