@@ -30,3 +30,10 @@ def add_covid_report(data):
     cur.execute(
         f'INSERT INTO "Covid_Report" (report_id,user_id,date,covid_percentage,travel_abroad_14days,contact_with_infected_person_14days,visited_healthcare_facility_14days,tested_positive_14days,fever,breathing_difficulty,sore_throat,cough,no_taste,no_smell,headache) VALUES (DEFAULT, \'{data["user_id"]}\', \'{data["date"]}\', \'{data["covid_percentage"][1]}\', \'{data["travel_abroad_14days"]}\', \'{data["contact_with_infected_person_14days"]}\', \'{data["visited_healthcare_facility_14days"]}\',\'{data["tested_positive_14days"]}\', \'{data["fever"]}\', \'{data["breahing_difficulty"]}\', \'{data["sore_throat"]}\', \'{data["cough"]}\', \'{data["no_taste"]}\',\'{data["no_smell"]}\', \'{data["headache"]}\')');
     con.commit()
+
+
+def get_covid_reports(id):
+    cur = con.cursor()
+    cur.execute(f'SELECT * from "Covid_Report" WHERE user_id=\'{id}\'')
+    rows = cur.fetchall()
+    return rows

@@ -45,7 +45,7 @@ def login():
                 'status': 'fail',
                 'message': 'Try again'
             }
-            return make_response(jsonify(responseObject)), 500
+            return make_response(jsonify(responseObject)), 400
 
         auth_token = encode_auth_token(id,username,role)
 
@@ -63,7 +63,7 @@ def login():
             'status': 'fail',
             'message': 'Try again'
         }
-        return make_response(jsonify(responseObject)), 500
+        return make_response(jsonify(responseObject)), 400
 
 
 
@@ -86,7 +86,7 @@ def register():
             'status': 'fail',
             'message': 'Try again'
         }
-        return make_response(jsonify(responseObject)), 500
+        return make_response(jsonify(responseObject)), 400
 
 
 
@@ -105,6 +105,23 @@ def isLoggedIn(request):
         print('NO TOKEN')
         return
 
+def isLoggedInAdmin(request):
+    # get the auth token
+    auth_header = request.headers.get('Authorization')
+    print('AUTH HEADER', auth_header)
+    if auth_header:
+        auth_token = auth_header.split(" ")[1]
+    else:
+        auth_token = ''
+    if auth_token:
+        resp = decode_auth_token(auth_token)
+        if(resp['role'] == 'admin'):
+            return resp
+        else:
+            return
+    else:
+        print('NO TOKEN')
+        return
 
 def encode_auth_token(user_id,username,role):
     """
