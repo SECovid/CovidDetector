@@ -16,7 +16,7 @@ def get_covid_reports():
 
         responseObject = {
             'status': 'success',
-            'message': 'Successfully logged in.',
+            'message': 'Successfully retrieved reports.',
             'covid_reports': reports
         }
         return make_response(jsonify(responseObject)), 200

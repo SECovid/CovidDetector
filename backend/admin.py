@@ -36,7 +36,7 @@ def retrain():
 
 #get statistics if admin
 
-#Check model health
+#Check model health / run unit tests?
 
 #Delete elements from db/ Get list of trainin data elements?
 
