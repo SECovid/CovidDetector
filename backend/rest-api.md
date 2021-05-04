@@ -41,7 +41,7 @@
 ```javascript
 {
     'status': 'success',
-    'message': 'Successfully logged in.'
+    'message': 'Successfully registered.'
 }
 ```
 
@@ -122,9 +122,7 @@
 **Response:**
 ```javascript
 {
-      'status': 'success',
-      'message': 'Successfully retrieved reports.',
-      'covid_reports': reports list
+    "results": "success"
 }
 ```
 

@@ -77,7 +77,7 @@ def register():
         database.add_user(post_data)
         responseObject = {
             'status': 'success',
-            'message': 'Successfully logged in.'
+            'message': 'Successfully registered.'
         }
         return make_response(jsonify(responseObject)), 200
     except Exception as e:
