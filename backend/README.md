@@ -5,7 +5,7 @@
 ### Authentication
 **Request:**
 ```javascript
-/auth/login
+POST /auth/login
 
 {
   "username": ...,
@@ -25,7 +25,7 @@
 
 **Request:**
 ```javascript
-/auth/register
+POST /auth/register
 {
   "first_name": ...,
   "last_name": ...,
@@ -52,7 +52,7 @@
 **Request:**
 
 ```javascript
-/prediction/fast_prediction
+POST /prediction/fast_prediction
 
 {
     "data": base64 encoded audio file,
@@ -82,7 +82,7 @@
 **Request:**
 
 ```javascript
-/prediction/accurate_prediction
+POST /prediction/accurate_prediction
 
 {
     "data": [base64 encoded audio files],
@@ -113,7 +113,7 @@
 **Request:**
 
 ```javascript
-/medical/upload_medical_test
+POST /medical/upload_medical_test
 {
         "data": base64 encoded audio file,
         "test_result" = 0 for No covid and 1 for Covid
@@ -131,7 +131,7 @@
 **Request:**
 
 ```javascript
-/reports
+GET /reports
 
 ```
 **Response:**
@@ -142,3 +142,51 @@
       'covid_reports': reports list
 }
 ```
+
+
+### Statistics
+**Request:**
+
+```javascript
+GET /admin/statistics/time
+
+```
+**Response:**
+```javascript
+{
+        'status': 'success',
+        'covidTime': [[time,covid%],[time,covid%],...]
+}
+```
+
+
+
+**Request:**
+
+```javascript
+GET /admin/statistics/country/<country>
+
+```
+**Response:**
+```javascript
+{
+        'status': 'success',
+        'country': country,
+        'covid': avg covid%
+}
+```
+
+
+**Request:**
+
+```javascript
+GET /admin/statistics/factor/<factor>
+
+```
+**Response:**
+```javascript
+{
+        'status': 'success',
+        'ifTrue': avg covid%,
+        'ifFalse': avg covid%
+}

@@ -64,6 +64,7 @@ def getCountryStatistics(country):
     covidCountryAverage = statistics.getCountryStatistics(country)
     responseObject = {
         'status': 'success',
+        'country': country,
         'covid': covidCountryAverage
     }
     return make_response(jsonify(responseObject)), 200
