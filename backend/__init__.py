@@ -1,15 +1,13 @@
 import os
-from flask import Flask
-from backend.make_prediction import make_prediction_blueprint
-from backend.upload_medical_test import  upload_medical_test_blueprint
-from backend.authentication import  auth_blueprint
-from backend.covid_report import  covid_reports_blueprint
 
+from flask import Flask
 from flask_cors import CORS
 
-
-
-
+from backend.authentication.authentication import auth_blueprint
+from backend.medical_test.upload_medical_test import upload_medical_test_blueprint
+from backend.prediction.make_prediction import make_prediction_blueprint
+from backend.reports.covid_report import covid_reports_blueprint
+from backend.admin.admin import admin_blueprint
 
 def create_app(test_config=None):
 
@@ -38,7 +36,7 @@ def create_app(test_config=None):
     app.register_blueprint(upload_medical_test_blueprint, url_prefix='/medical')
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
     app.register_blueprint(covid_reports_blueprint, url_prefix='/reports')
-
+    app.register_blueprint(admin_blueprint, url_prefix='/admin')
     # a simple page that says hello
     @app.route('/hello')
     def hello():

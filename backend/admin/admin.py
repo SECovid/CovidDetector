@@ -4,8 +4,10 @@ from backend import authentication
 from backend import database
 from ml.model import retraining_model
 from ml.model import log
+from backend.admin import statistics
 admin_blueprint = Blueprint('admin', __name__)
 
+#Check if logged in as admin
 #Retrain model manually if admin
 #Rollback to previous models
 @admin_blueprint.route('/retrain',methods=['POST'])
@@ -35,6 +37,22 @@ def retrain():
 
 
 #get statistics if admin
+##type 1: Example: Cough/ Positive return cough: %pos %neg and no cough %pos and %neg
+@admin_blueprint.route('/statistics/factor/<factor>',methods=['GET'])
+def getFactorStatistics(factor):
+    pass
+##type 2: Example: %pos and %neg per time frame
+@admin_blueprint.route('/statistics/time',methods=['GET'])
+def getStatisticsTime():
+    pass
+##type 3: Example: %pos and %neg per country
+@admin_blueprint.route('/statistics/country/<country>',methods=['GET'])
+def getCountryStatistics(country):
+
+    pass
+
+
+
 
 #Check model health / run unit tests?
 
