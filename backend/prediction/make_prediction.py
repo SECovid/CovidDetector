@@ -4,12 +4,12 @@ from ml.spectogram import audio_processing
 from flask import Flask, request, jsonify
 from backend import authentication
 from backend import database
-import tensorflow as tf
+#import tensorflow as tf
 import base64
 import os
 import json
 from flask import jsonify
-model = tf.keras.models.load_model('ml/model/trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf')
+#model = tf.keras.models.load_model('ml/model/trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf')
 make_prediction_blueprint = Blueprint('make_prediction', __name__)
 
 @make_prediction_blueprint.route('/fast_prediction',methods=['POST'])

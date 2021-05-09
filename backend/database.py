@@ -37,3 +37,27 @@ def get_covid_reports(id):
     cur.execute(f'SELECT * from "Covid_Report" WHERE user_id=\'{id}\'')
     rows = cur.fetchall()
     return rows
+
+
+def get_covid_factor(factor):
+    cur = con.cursor()
+    cur.execute(f'SELECT covid_percentage from "Covid_Report" WHERE {factor}=\'true\'')
+    ifTrue = cur.fetchall()
+
+    cur = con.cursor()
+    cur.execute(f'SELECT covid_percentage from "Covid_Report" WHERE {factor}=\'false\'')
+    ifFalse = cur.fetchall()
+
+    return ifTrue,ifFalse
+
+def get_covid_country(country):
+    cur = con.cursor()
+    cur.execute(f'SELECT covid_percentage from "Covid_Report" INNER JOIN "User" ON "User".user_id="Covid_Report".user_id WHERE country=\'{country}\';')
+    rows = cur.fetchall()
+    return rows
+
+def get_covid_time():
+    cur = con.cursor()
+    cur.execute(f'SELECT date,covid_percentage from "Covid_Report"')
+    rows = cur.fetchall()
+    return rows

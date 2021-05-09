@@ -37,19 +37,37 @@ def retrain():
 
 
 #get statistics if admin
-##type 1: Example: Cough/ Positive return cough: %pos %neg and no cough %pos and %neg
+##type 1: Example: Cough/ Positive return cough: avg %cov if COUGH avg %cov if NO COUGH
 @admin_blueprint.route('/statistics/factor/<factor>',methods=['GET'])
 def getFactorStatistics(factor):
-    pass
-##type 2: Example: %pos and %neg per time frame
+    ifTrue, ifFalse =statistics.getFactorStatistics(factor)
+    responseObject = {
+        'status': 'success',
+        'ifTrue': ifTrue,
+        'ifFalse': ifFalse
+    }
+    return make_response(jsonify(responseObject)), 200
+
+##type 2: Example: %cov,time
 @admin_blueprint.route('/statistics/time',methods=['GET'])
 def getStatisticsTime():
-    pass
-##type 3: Example: %pos and %neg per country
+    covidTime = statistics.getStatisticsTime()
+    responseObject = {
+        'status': 'success',
+        'covidTime': covidTime
+    }
+    return make_response(jsonify(responseObject)), 200
+
+##type 3: Example: avg %cov per country
 @admin_blueprint.route('/statistics/country/<country>',methods=['GET'])
 def getCountryStatistics(country):
+    covidCountryAverage = statistics.getCountryStatistics(country)
+    responseObject = {
+        'status': 'success',
+        'covid': covidCountryAverage
+    }
+    return make_response(jsonify(responseObject)), 200
 
-    pass
 
 
 
