@@ -7,7 +7,7 @@ __pycache__/
 
 # C extensions
 *.so
-nodemodules
+
 # Distribution / packaging
 .Python
 env/
