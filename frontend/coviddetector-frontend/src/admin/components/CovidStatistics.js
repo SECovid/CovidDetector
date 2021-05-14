@@ -20,12 +20,12 @@ const CovidStatistics = (props) => {
       {
         backgroundColor: colors.indigo[500],
         data: [93, 7],
-        label: 'Cough'
+        label: 'Covid'
       },
       {
         backgroundColor: colors.grey[200],
         data: [31,69],
-        label: 'No Cough'
+        label: 'No Covid'
       }
     ],
     labels: ['Cough', 'No Cough']
