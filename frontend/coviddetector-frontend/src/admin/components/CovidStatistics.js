@@ -89,7 +89,16 @@ const CovidStatistics = (props) => {
   return (
     <Card {...props}>
       <CardHeader
-        title="Latest Sales"
+        action={(
+          <Button
+            endIcon={<ArrowDropDownIcon />}
+            size="small"
+            variant="text"
+          >
+            Factor
+          </Button>
+        )}
+        title="Covid statistics"
       />
       <Divider />
       <CardContent>
@@ -100,23 +109,7 @@ const CovidStatistics = (props) => {
           />
       </div>
       </CardContent>
-      <Divider />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          p: 2
-        }}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          size="small"
-          variant="text"
-        >
-          Overview
-        </Button>
-      </Box>
+
     </Card>
   );
 };

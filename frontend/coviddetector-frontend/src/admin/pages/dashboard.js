@@ -11,7 +11,8 @@ import NumberOfTrainingDataUsed from '../components/NumberOfTrainingDataUsed';
 import TotalNumberOfDataPoints from '../components/TotalNumberOfDataPoints';
 import CovidMap from '../components/CovidMap';
 import CovidStatistics from '../components/CovidStatistics'
-
+import CovidPercentagesPlot from '../components/CovidPercentagesPlot';
+import ModelRetraining from '../components/ModelRetraining';
 const Dashboard = () => (
   <>
 
@@ -84,7 +85,30 @@ const Dashboard = () => (
             <CovidStatistics/>
           </Grid>
 
+
+          <Grid
+            item
+            lg={6}
+            md={12}
+            xl={6}
+            xs={12}
+          >
+           <CovidPercentagesPlot/>
           
+          </Grid>
+
+          <Grid
+            item
+            lg={6}
+            md={12}
+            xl={6}
+            xs={12}
+          >
+           <ModelRetraining/>
+          
+          </Grid>
+
+
          <Grid 
           container
           align = "center" justify = "center" alignItems = "center" 
@@ -103,7 +127,13 @@ const Dashboard = () => (
        
        
         </Grid>
+
+        
       </Container>
+    
+
+   
+
     </Box>
   </>
 );

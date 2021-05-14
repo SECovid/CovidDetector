@@ -1,7 +1,18 @@
 import React from 'react';
 import { WorldMap } from "react-svg-worldmap"
-
-export default function CovidMap(){
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Divider,
+    useTheme,
+    colors
+  } from '@material-ui/core';
+  import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+  import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+export default function CovidMap(props){
     const data =
     [
       { country: "cn", value: 1389618778 }, // china
@@ -17,8 +28,19 @@ export default function CovidMap(){
     ]
 
   return (
+    <Card {...props}>
+    <CardHeader
+
+      title="Covid Map"
+    />
+    <Divider />
+    <CardContent>
     <div>
        <WorldMap color="blue" value-suffix="tests" size="xxl" data={data} />
     </div>
+    </CardContent>
+    
+  </Card>
+
   )
 }
