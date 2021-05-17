@@ -1,3 +1,5 @@
+
+
 import { Bar } from 'react-chartjs-2';
 import {
   Box,
@@ -7,7 +9,11 @@ import {
   CardHeader,
   Divider,
   useTheme,
-  colors
+  colors ,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
@@ -31,6 +37,10 @@ const CovidStatistics = (props) => {
     labels: ['Cough', 'No Cough']
   };
 
+  const handleChange = (e) => {
+    console.log("IN HANDLE CHANGE")
+  
+  };
   const options = {
     animation: false,
     cornerRadius: 20,
@@ -88,18 +98,18 @@ const CovidStatistics = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon />}
-            size="small"
-            variant="text"
-          >
-            Factor
-          </Button>
-        )}
+            <CardHeader
+        action={
+          <FormControl>
+            <InputLabel>Factor</InputLabel>
+            <Select onChange={handleChange} style={{ width: 100 }}>
+              <MenuItem value="Hi">Hi</MenuItem>
+              <MenuItem value="Bye">Bye</MenuItem>
+            </Select>
+          </FormControl>
+        }
         title="Covid statistics"
-      />
+      ></CardHeader>
       <Divider />
       <CardContent>
       <div style={{'height':350}}> 

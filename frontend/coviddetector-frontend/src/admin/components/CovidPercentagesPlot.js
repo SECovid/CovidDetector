@@ -48,7 +48,7 @@ const CovidPercentagesPlot = (props) => {
       />
       <Divider />
       <CardContent>
-      <div style={{'height':350}}> 
+      <div > 
       <Line  data={data} />
       </div>
       </CardContent>
