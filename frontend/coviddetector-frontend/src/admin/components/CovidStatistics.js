@@ -1,4 +1,4 @@
-
+import React,  { useState } from 'react';
 
 import { Bar } from 'react-chartjs-2';
 import {
@@ -17,32 +17,68 @@ import {
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import send_request from '../../API/APIcalls';
 
 const CovidStatistics = (props) => {
   const theme = useTheme();
 
-  const data = {
+  const getData= (factor) =>{
+    send_request('admin/statistics/factor/'+factor,'GET').then(
+      res => {
+        console.log(factor)
+        console.log('FACTOR ',res)
+        const ifTrue = res['data']['ifTrue'] * 100
+        const ifFalse = res['data']['ifFalse'] * 100
+
+        setData({
+          datasets: [
+            {
+              backgroundColor: colors.indigo[500],
+              data: [ifTrue, ifFalse],
+              label: 'Covid'
+            },
+            {
+              backgroundColor: colors.grey[200],
+              data: [100-ifTrue, 100-ifFalse],
+              label: 'No Covid'
+            }
+          ],
+          labels: [factor+': True', factor+': False']
+        }
+
+        )
+        console.log(data)
+      }
+    )
+  }
+  const [data, setData] = useState({
     datasets: [
       {
         backgroundColor: colors.indigo[500],
-        data: [93, 7],
+        data: [0, 0],
         label: 'Covid'
       },
       {
         backgroundColor: colors.grey[200],
-        data: [31,69],
+        data: [0,0],
         label: 'No Covid'
       }
     ],
-    labels: ['Cough', 'No Cough']
-  };
+    labels: ['', '']
+  });
+  
+
+
+
+
 
   const handleChange = (e) => {
     console.log("IN HANDLE CHANGE")
-  
+    console.log(e.target.value)
+    getData(e.target.value)
   };
   const options = {
-    animation: false,
+    animation: true,
     cornerRadius: 20,
     layout: { padding: 0 },
     legend: { display: false },
@@ -103,8 +139,18 @@ const CovidStatistics = (props) => {
           <FormControl>
             <InputLabel>Factor</InputLabel>
             <Select onChange={handleChange} style={{ width: 100 }}>
-              <MenuItem value="Hi">Hi</MenuItem>
-              <MenuItem value="Bye">Bye</MenuItem>
+         
+              <MenuItem value="travel_abroad_14days">travel_abroad_14days</MenuItem>
+              <MenuItem value="contact_with_infected_person_14days">contact_with_infected_person_14days</MenuItem>
+              <MenuItem value="visited_healthcare_facility_14days">visited_healthcare_facility_14days</MenuItem>
+              <MenuItem value="tested_positive_14days">tested_positive_14days</MenuItem>
+              <MenuItem value="fever">fever</MenuItem>
+              <MenuItem value="breathing_difficulty">breathing_difficulty</MenuItem>
+              <MenuItem value="sore_throat">sore_throat</MenuItem>
+              <MenuItem value="cough">cough</MenuItem>
+              <MenuItem value="no_taste">no_taste</MenuItem>
+              <MenuItem value="no_smell">no_smell</MenuItem>
+              <MenuItem value="headache">headache</MenuItem>
             </Select>
           </FormControl>
         }

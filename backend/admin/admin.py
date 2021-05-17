@@ -60,12 +60,11 @@ def getStatisticsTime():
     return make_response(jsonify(responseObject)), 200
 
 ##type 3: Example: avg %cov per country
-@admin_blueprint.route('/statistics/country/<country>',methods=['GET'])
-def getCountryStatistics(country):
-    covidCountryAverage = statistics.getCountryStatistics(country)
+@admin_blueprint.route('/statistics/country',methods=['GET'])
+def getCountryStatistics():
+    covidCountryAverage = statistics.getCountryStatistics()
     responseObject = {
         'status': 'success',
-        'country': country,
         'covid': covidCountryAverage
     }
     return make_response(jsonify(responseObject)), 200
