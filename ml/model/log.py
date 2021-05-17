@@ -18,7 +18,7 @@ def getSizeFromLogs():
     import glob
     import os
     #Get latest logs
-    list_of_files = glob.glob('logs/*.json')  # * means all if need specific format then *.csv
+    list_of_files = glob.glob('ml/model/logs/*.json')  # * means all if need specific format then *.csv
     if(len(list_of_files) == 0 ):
         return 0
     latest_file = max(list_of_files, key=os.path.getctime)

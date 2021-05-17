@@ -9,6 +9,10 @@ def get_all_data(date = dt.datetime.utcnow()):
     data = collection.find({"date":{"$lte":date}})
     return data
 
+def get_all_data_size(date = dt.datetime.utcnow()):
+    data = collection.estimated_document_count()
+    return data
+
 #Insert a data point
 def insert_data(spectrogram, medical_test_result, date = dt.datetime.utcnow()):
     datapoint = {"date": date, "label": medical_test_result, "spectrogram": spectrogram.tostring()}

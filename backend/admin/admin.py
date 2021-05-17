@@ -5,6 +5,7 @@ from backend import database
 from ml.model import retraining_model
 from ml.model import log
 from backend.admin import statistics
+from ml.data import dataset
 admin_blueprint = Blueprint('admin', __name__)
 
 #Check if logged in as admin
@@ -94,5 +95,46 @@ def number_of_trainin_data():
         responseObject = {
             'status': 'fail',
             'message': 'Couldn\'t get training size'
+        }
+        return make_response(jsonify(responseObject)), 400
+
+
+
+#View number of total training data
+@admin_blueprint.route('/total_training_data',methods=['GET'])
+def total_number_of_trainin_data():
+    try:
+        size = dataset.get_all_data_size()
+        responseObject = {
+            'status': 'success',
+            'message': 'Successfully fetched training size',
+            'size': size
+        }
+        return make_response(jsonify(responseObject)), 200
+    except:
+        responseObject = {
+            'status': 'fail',
+            'message': 'Couldn\'t get training size'
+        }
+        return make_response(jsonify(responseObject)), 400
+
+
+#Average covid percentage
+@admin_blueprint.route('/average_covid_percentage',methods=['GET'])
+def average_covid_percentage():
+    try:
+        listOfCovidPercentages = database.get_all_covid_reports()
+        listOfCovidPercentages = [item for sublist in  listOfCovidPercentages for item in sublist]
+        average = (sum(listOfCovidPercentages) / len(listOfCovidPercentages))
+        responseObject = {
+            'status': 'success',
+            'message': 'Successfully fetched average covid percentage',
+            'average': average
+        }
+        return make_response(jsonify(responseObject)), 200
+    except:
+        responseObject = {
+            'status': 'fail',
+            'message': 'Couldn\'t get average covid percentage'
         }
         return make_response(jsonify(responseObject)), 400

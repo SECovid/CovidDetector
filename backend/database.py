@@ -38,6 +38,11 @@ def get_covid_reports(id):
     rows = cur.fetchall()
     return rows
 
+def get_all_covid_reports():
+    cur = con.cursor()
+    cur.execute(f'SELECT covid_percentage from "Covid_Report"')
+    rows = cur.fetchall()
+    return rows
 
 def get_covid_factor(factor):
     cur = con.cursor()
