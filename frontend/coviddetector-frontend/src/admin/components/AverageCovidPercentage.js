@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Avatar,
     Box,
@@ -20,7 +20,9 @@ import {
       )
     }
     const [percentages, setPercentages] = useState(0);
-    getAverageCovid()
+      useEffect(() => {
+          getAverageCovid()
+      },[percentages])
     return(
       <Card
         sx={{ height: '100%' }}

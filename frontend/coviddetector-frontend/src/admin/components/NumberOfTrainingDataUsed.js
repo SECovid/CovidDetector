@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Avatar,
     Box,
@@ -26,7 +26,9 @@ import {
       )
     }
     const [dataPoints, setDataPoints] = useState(0);
-    getNumberOfTrainingData()
+      useEffect(() => {
+          getNumberOfTrainingData()
+      },[dataPoints])
     return(
       <Card {...props}>
         <CardContent>
