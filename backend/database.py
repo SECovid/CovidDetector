@@ -12,7 +12,7 @@ def get_user(email):
 
 def get_admin(username):
     cur = con.cursor()
-    cur.execute(f'SELECT * from "User" WHERE username=\'{username}\'')
+    cur.execute(f'SELECT * from "Admin" WHERE username=\'{username}\'')
     rows = cur.fetchall()
 
     return rows
@@ -38,6 +38,11 @@ def get_covid_reports(id):
     rows = cur.fetchall()
     return rows
 
+def get_all_covid_reports():
+    cur = con.cursor()
+    cur.execute(f'SELECT covid_percentage from "Covid_Report"')
+    rows = cur.fetchall()
+    return rows
 
 def get_covid_factor(factor):
     cur = con.cursor()
@@ -50,14 +55,14 @@ def get_covid_factor(factor):
 
     return ifTrue,ifFalse
 
-def get_covid_country(country):
+def get_covid_country():
     cur = con.cursor()
-    cur.execute(f'SELECT covid_percentage from "Covid_Report" INNER JOIN "User" ON "User".user_id="Covid_Report".user_id WHERE country=\'{country}\';')
+    cur.execute(f'SELECT covid_percentage,country from "Covid_Report" INNER JOIN "User" ON "User".user_id="Covid_Report".user_id ;')
     rows = cur.fetchall()
     return rows
 
 def get_covid_time():
     cur = con.cursor()
-    cur.execute(f'SELECT date,covid_percentage from "Covid_Report"')
+    cur.execute(f'SELECT date,covid_percentage from "Covid_Report" ORDER BY date')
     rows = cur.fetchall()
     return rows
