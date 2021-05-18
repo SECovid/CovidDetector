@@ -12,7 +12,7 @@ def get_user(email):
 
 def get_admin(username):
     cur = con.cursor()
-    cur.execute(f'SELECT * from "User" WHERE username=\'{username}\'')
+    cur.execute(f'SELECT * from "Admin" WHERE username=\'{username}\'')
     rows = cur.fetchall()
 
     return rows
