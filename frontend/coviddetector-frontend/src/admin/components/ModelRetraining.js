@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from 'react';
 import {
   Box,
   Button,
@@ -17,6 +17,7 @@ import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import send_request from "../../API/APIcalls";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -32,7 +33,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModelRetraining(props) {
   const classes = useStyles();
+    const [date, setDate] = useState(0);
+    const [status, setStatus] = useState('Waiting');
+    const retrainModel= () =>{
+        //let utcDate = new Date(Date.UTC(2018, 11, 1, 0, 0, 0));
+        var jsDate = new Date(date)
+        var utcDate = jsDate.toUTCString()
+        var body = {'date':utcDate}
+        console.log(utcDate)
 
+        send_request('admin/retrain','POST',body).then(
+            res => {
+                console.log(res)
+                setStatus(res["data"]["message"])
+            }
+        )
+    }
+
+    const handleChange = (event) => {
+        console.log(event.target.value)
+        setDate(event.target.value);  }
   return (
     <Card {...props}>
       <CardHeader title="Model Actions" />
@@ -51,6 +71,7 @@ export default function ModelRetraining(props) {
                 label="Rollback Date"
                 type="date"
                 defaultValue="2021-05-22"
+                onChange={handleChange}
                 className={classes.textField}
                 InputLabelProps={{
                   shrink: true,
@@ -64,6 +85,7 @@ export default function ModelRetraining(props) {
               color={colors.indigo[500]}
               className={classes.button}
               endIcon={<CloudUploadIcon />}
+              onClick={retrainModel}
             >
               Retrain
             </Button>
@@ -80,11 +102,11 @@ export default function ModelRetraining(props) {
       >
         <Button
           color="primary"
-          endIcon={<ArrowRightIcon />}
+          
           size="small"
           variant="text"
         >
-          Overview
+            {status}
         </Button>
       </Box>
     </Card>

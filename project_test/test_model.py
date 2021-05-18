@@ -38,7 +38,8 @@ class TestModel(unittest.TestCase):
         wname = 'project_test/test1Covid.wav'
         spectrogram = audio_processing.audio_to_spectrogram(wname)
         print('Size ',spectrogram.shape)
-        pass
+        self.assertEqual(spectrogram.shape,(1025,69))
+
 
 
 

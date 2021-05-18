@@ -68,7 +68,7 @@ def retraining_pipeline(date=dt.datetime.utcnow()):
     spectrograms = np.reshape(spectrograms, (spectrograms.shape[0], spectrograms.shape[1], spectrograms.shape[2], 1))
     train_model.create_model(spectrograms,labels)
     print('Retraining done ...')
-    return
+    return 'TRAINED'
 
 
 if __name__ == "__main__":
