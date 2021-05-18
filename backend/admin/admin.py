@@ -6,6 +6,7 @@ from ml.model import retraining_model
 from ml.model import log
 from backend.admin import statistics
 from ml.data import dataset
+from project_test import tests_handler
 admin_blueprint = Blueprint('admin', __name__)
 
 #Check if logged in as admin
@@ -74,7 +75,17 @@ def getCountryStatistics():
 
 
 #Check model health / run unit tests?
+@admin_blueprint.route('/tests',methods=['GET'])
+def runUnitTests():
+    result, failures = tests_handler.run_test()
 
+    print('API result ',result)
+    print('API failures ',failures)
+    responseObject = {
+        'status': 'success',
+        'result': result
+    }
+    return make_response(jsonify(responseObject)), 200
 #Delete elements from db/ Get list of trainin data elements?
 
 
