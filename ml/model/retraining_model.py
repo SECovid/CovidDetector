@@ -7,6 +7,7 @@ import random
 def retraining_pipeline(date=dt.datetime.utcnow()):
     # Get data
     data = list(dataset.get_all_data(date))
+    print('DATA SIZE ',len(data))
     random.shuffle(data)
     # Number of training points
     current_training_size = len(data)
@@ -47,12 +48,15 @@ def retraining_pipeline(date=dt.datetime.utcnow()):
                 break
     print('Balanced dataset')
     #Update current training size
+    print(labels)
     current_training_size = labels.shape[0]
 
 
     # Check if enough data
     # Extract previous model's training size
     previous_training_size = log.getSizeFromLogs()
+    print('CUrrent',current_training_size )
+    print('previous ',previous_training_size)
     # Compare new size with old size and check if enough
     print('Number of new datapoints: ', (current_training_size - previous_training_size))
     if(current_training_size - previous_training_size < 30):

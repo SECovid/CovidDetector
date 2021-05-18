@@ -54,7 +54,7 @@ def create_model(training_data, training_labels):
     )
 
     print('Done training ...')
-    model.save('trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf', save_format='tf')
+    model.save('ml/model/trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf', save_format='tf')
     print('Model saved ...')
     #Add log file containing: Size of training data, accuracy and other metrics
     log.modelLogs(history=history,size=training_data.shape[0])
