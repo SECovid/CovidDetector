@@ -1,0 +1,101 @@
+[{
+    "history_id": 1,
+    "prev_recording": null,
+    "date": "2021/07/22",
+    "result": "Positive"
+}, {
+    "history_id": 2,
+    "prev_recording": null,
+    "date": "2025/06/22",
+    "result": "Negative"
+}, {
+    "history_id": 3,
+    "prev_recording": null,
+    "date": "2025/10/05",
+    "result": "Negative"
+}, {
+    "history_id": 4,
+    "prev_recording": null,
+    "date": "2024/08/06",
+    "result": "Negative"
+}, {
+    "history_id": 5,
+    "prev_recording": null,
+    "date": "2026/01/03",
+    "result": "Negative"
+}, {
+    "history_id": 6,
+    "prev_recording": null,
+    "date": "2026/02/04",
+    "result": "Negative"
+}, {
+    "history_id": 7,
+    "prev_recording": null,
+    "date": "2025/04/29",
+    "result": "Negative"
+}, {
+    "history_id": 8,
+    "prev_recording": null,
+    "date": "2023/01/12",
+    "result": "Positive"
+}, {
+    "history_id": 9,
+    "prev_recording": null,
+    "date": "2026/04/23",
+    "result": "Negative"
+}, {
+    "history_id": 10,
+    "prev_recording": null,
+    "date": "2027/11/25",
+    "result": "Negative"
+}, {
+    "history_id": 11,
+    "prev_recording": null,
+    "date": "2026/06/18",
+    "result": "Negative"
+}, {
+    "history_id": 12,
+    "prev_recording": null,
+    "date": "2023/10/26",
+    "result": "Positive"
+}, {
+    "history_id": 13,
+    "prev_recording": null,
+    "date": "2025/05/07",
+    "result": "Positive"
+}, {
+    "history_id": 14,
+    "prev_recording": null,
+    "date": "2027/12/22",
+    "result": "Positive"
+}, {
+    "history_id": 15,
+    "prev_recording": null,
+    "date": "2026/08/03",
+    "result": "Negative"
+}, {
+    "history_id": 16,
+    "prev_recording": null,
+    "date": "2030/02/12",
+    "result": "Negative"
+}, {
+    "history_id": 17,
+    "prev_recording": null,
+    "date": "2028/02/28",
+    "result": "Negative"
+}, {
+    "history_id": 18,
+    "prev_recording": null,
+    "date": "2022/08/15",
+    "result": "Negative"
+}, {
+    "history_id": 19,
+    "prev_recording": null,
+    "date": "2025/10/07",
+    "result": "Positive"
+}, {
+    "history_id": 20,
+    "prev_recording": null,
+    "date": "2026/07/22",
+    "result": "Positive"
+}]​
