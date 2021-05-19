@@ -1,7 +1,7 @@
 
 from flask import Blueprint
 from flask import current_app, flash, jsonify, make_response, redirect, request, url_for
-from backend import authentication
+from backend.authentication import authentication
 from backend import database
 
 

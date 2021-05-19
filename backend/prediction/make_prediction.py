@@ -1,8 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint,make_response
 from ml.prediction import predict_covid
 from ml.spectogram import audio_processing
 from flask import Flask, request, jsonify
-from backend import authentication
+from backend.authentication import authentication
 from backend import database
 
 import tensorflow as tf
@@ -43,9 +43,11 @@ def make_fast_prediction():
             database.add_covid_report(request.json)
         return json.dumps({"results": result.tolist()})
 
-    except NameError:
-        print(NameError)
-        return json.dumps({"results": []})
+    except:
+        responseObject = {
+            'status': 'fail'
+        }
+        return make_response(jsonify(responseObject)), 400
 
 
 
@@ -76,10 +78,14 @@ def make_accurate_prediction():
         if(authentication.isLoggedIn(request)):
             user_id = authentication.isLoggedIn(request)['id']
             request.json['user_id'] = user_id
-            request.json['covid_percentage'] = result[0]
+            request.json['covid_percentage'] = result[0].tolist()
             database.add_covid_report(request.json)
 
         return json.dumps({"results": result.tolist()})
     except:
-        return json.dumps({"results": []})
+        responseObject = {
+            'status': 'fail'
+        }
+        return make_response(jsonify(responseObject)), 400
+
 

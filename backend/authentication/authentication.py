@@ -20,6 +20,7 @@ def login():
 
 
     post_data = request.json
+    print(post_data)
     try:
         # Check if correct pass
         username = post_data['username']
@@ -41,6 +42,7 @@ def login():
         if bcrypt.checkpw(input_password.encode("utf-8"), password.encode("utf-8")):
             print("Password match!")
         else:
+            print('WRONG PASS ',input_password)
             responseObject = {
                 'status': 'fail',
                 'message': 'Try again'

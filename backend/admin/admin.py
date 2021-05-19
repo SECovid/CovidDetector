@@ -49,13 +49,19 @@ def retrain():
 ##type 1: Example: Cough/ Positive return cough: avg %cov if COUGH avg %cov if NO COUGH
 @admin_blueprint.route('/statistics/factor/<factor>',methods=['GET'])
 def getFactorStatistics(factor):
-    ifTrue, ifFalse =statistics.getFactorStatistics(factor)
-    responseObject = {
-        'status': 'success',
-        'ifTrue': ifTrue,
-        'ifFalse': ifFalse
-    }
-    return make_response(jsonify(responseObject)), 200
+    try:
+        ifTrue, ifFalse =statistics.getFactorStatistics(factor)
+        responseObject = {
+            'status': 'success',
+            'ifTrue': ifTrue,
+            'ifFalse': ifFalse
+        }
+        return make_response(jsonify(responseObject)), 200
+    except Exception as e:
+        responseObject = {
+            'status': 'fail'
+        }
+        return make_response(jsonify(responseObject)), 400
 
 ##type 2: Example: %cov,time
 @admin_blueprint.route('/statistics/time',methods=['GET'])
@@ -70,13 +76,19 @@ def getStatisticsTime():
 ##type 3: Example: avg %cov per country
 @admin_blueprint.route('/statistics/country',methods=['GET'])
 def getCountryStatistics():
-    covidCountryAverage = statistics.getCountryStatistics()
-    responseObject = {
-        'status': 'success',
-        'covid': covidCountryAverage
-    }
-    return make_response(jsonify(responseObject)), 200
+    try:
 
+        covidCountryAverage = statistics.getCountryStatistics()
+        responseObject = {
+            'status': 'success',
+            'covid': covidCountryAverage
+        }
+        return make_response(jsonify(responseObject)), 200
+    except Exception as e:
+        responseObject = {
+            'status': 'fail'
+        }
+        return make_response(jsonify(responseObject)), 400
 
 
 
@@ -84,15 +96,21 @@ def getCountryStatistics():
 #Check model health / run unit tests?
 @admin_blueprint.route('/tests',methods=['GET'])
 def runUnitTests():
-    result, failures = tests_handler.run_test()
+    try:
+        result, failures = tests_handler.run_test()
 
-    print('API result ',result)
-    print('API failures ',failures)
-    responseObject = {
-        'status': 'success',
-        'result': result
-    }
-    return make_response(jsonify(responseObject)), 200
+        print('API result ',result)
+        print('API failures ',failures)
+        responseObject = {
+            'status': 'success',
+            'result': result
+        }
+        return make_response(jsonify(responseObject)), 200
+    except Exception as e:
+        responseObject = {
+            'status': 'fail'
+        }
+        return make_response(jsonify(responseObject)), 400
 #Delete elements from db/ Get list of trainin data elements?
 
 
