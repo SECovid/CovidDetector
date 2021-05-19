@@ -43,7 +43,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5px;
+    margin-top: 50px;
     position: relative;
     z-index: 99;
 }
@@ -68,7 +68,7 @@
     flex-direction: column;
     justify-content: center;
     height: 90%;
-    background-color: #3498db;
+    background-color: #d50000;
     width: 100%;
     position: absolute;
     right: -34%;
@@ -122,4 +122,8 @@
 
 .btn:focus {
     outline: none;
+}
+
+.form{
+    margin: 5px;
 }

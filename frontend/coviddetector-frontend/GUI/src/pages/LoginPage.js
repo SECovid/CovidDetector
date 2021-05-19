@@ -42,7 +42,7 @@ class LoginPage extends React.Component{
 }
 
 const RightSide = props => {
-    return <div className="right-side" ref={props.containerRef} onClick={props.onClick}>
+    return <div className="right-side right" ref={props.containerRef} onClick={props.onClick}>
         <div className="inner-container">
             <div className="text">
                 {props.current}

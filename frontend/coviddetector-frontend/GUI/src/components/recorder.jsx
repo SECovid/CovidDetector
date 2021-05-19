@@ -1,52 +1,88 @@
 import React from "react";
-import AudioReactRecorder, { RecordState } from 'audio-react-recorder'
+import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
 import send_request from "../APIcalls";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardVoiceIcon from "@material-ui/icons/KeyboardVoice";
+import Box from "@material-ui/core/Box"
+import {Typography} from "@material-ui/core";
 
 
 export default class Recorder extends React.Component {
-    data;
-
+    counting;
 
     constructor(props) {
         super(props);
         this.state = {
-            recordState: null
+            recordState: null,
+            counter: 0,
+            seconds: 0,
+            milliseconds: 0,
+            test_completed: false,
+            covid_positive: null,
+            covid_negative: null
         };
+        this.countUp = this.countUp.bind(this);
+        this.start = this.start.bind(this);
+        this.onStop = this.onStop.bind(this);
+        this.updateStates = this.updateStates.bind(this);
+    }
+
+    countUp() {
+        this.setState({counter: this.state.counter + 1});
+        this.counterToTime(this.state.counter);
+    }
+
+    counterToTime = (time) => {
+        this.setState({seconds: Math.floor(time / 100)});
+        this.setState({milliseconds: time - this.state.seconds * 100});
+
     }
 
     start = () => {
+        this.setState({counter: 0})
+        this.counting = setInterval(this.countUp, 10);
         this.setState({
             recordState: RecordState.START
         })
     }
 
     stop = () => {
+        clearInterval(this.counting)
         this.setState({
             recordState: RecordState.STOP
         })
     }
 
-    blobToBase64(blob) {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        return new Promise(resolve => {
-            reader.onloadend = () => {
-                resolve(reader.result);
-            };
+    updateStates = (results) => {
+        this.setState({
+            test_completed: true,
+            covid_negative: results[0][0],
+            covid_positive: results[0][1]
         });
-    };
+
+
+    }
 
     onStop = (audioData) => {
         console.log('audioData', audioData)
         var reader = new FileReader();
         reader.readAsDataURL(audioData.blob);
-        reader.onloadend = function () {
+        var results;
+        reader.onloadend = () => {
             var base64data = reader.result;
             base64data = base64data.substr(base64data.indexOf(',') + 1);
-            send_request('prediction/fast_prediction','POST', {'data': base64data}).then(r => console.log(r))
+             send_request('prediction/fast_prediction', 'POST', {'data': base64data}).then(r => {
+                console.log(this)
+                console.log(r);
+                results = r.data.results;
+                this.updateStates(results)
+
+            })
         }
+    }
+
+    round(num){
+        return(Math.round((num + Number.EPSILON) * 100))
     }
 
 
@@ -54,19 +90,24 @@ export default class Recorder extends React.Component {
         const {recordState} = this.state
 
         return (<div className="App">
-            <div>
+            <Box m={5}>
                 <AudioReactRecorder
                     state={recordState}
                     onStop={this.onStop}
+                    updateStates={this.updateStates}
                     backgroundColor="rgb(255,255,255)"
                     foregroundColor="rgb(0,0,0)"/>
-                <div onClick={(recordState === RecordState.START) ? this.stop : this.start} style={{ textAlign: "center"}}>
+                <div onClick={(recordState === RecordState.START) ? this.stop : this.start}
+                     style={{textAlign: "center"}}>
                     <IconButton color="secondary"
                     >
-                        <KeyboardVoiceIcon style={{ fontSize: 60 }}/>
+                        <KeyboardVoiceIcon style={{fontSize: 60}}/>
                     </IconButton>
                 </div>
-            </div>
+                <Typography>{(this.state.seconds < 10) ? '0' + this.state.seconds : this.state.milliseconds} : {(this.state.milliseconds < 10) ? '0' + this.state.milliseconds : this.state.milliseconds}</Typography>
+                <Typography>{this.state.test_completed ? 'Percentage of Negative COVID: ' +
+                    this.round(this.state.covid_negative) + "% Percentage of Positive COVID: " + this.round(this.state.covid_positive) +"%" : ''} < /Typography>
+            </Box>
         </div>)
 
     }

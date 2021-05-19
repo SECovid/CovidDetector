@@ -2,15 +2,25 @@ import React from 'react';
 import loginImg from '../login.svg';
 import './styles.scss'
 import send_request from "../APIcalls";
+import Button from "@material-ui/core/Button";
+import {InputLabel, TextField} from "@material-ui/core";
+import isLoggedIn from "../functions/isLoggedIn";
 
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            incorrectPassword: false
         }
         this.login = this.login.bind(this);
+    }
+
+    isFormValid() {
+        const {email, password} = this.state;
+
+        return email && password;
     }
 
     login() {
@@ -20,8 +30,17 @@ export default class Login extends React.Component {
             'role': "regular"
         }).then(r => {
                 console.log(r);
-                const {token} = r.data.getItem('auth_token');
-                localStorage.setItem('token', token);
+                if (r.data.status === "success") {
+                    const token = r.data.auth_token;
+                    this.setState({incorrectPassword: false})
+                    localStorage.setItem('token', token);
+                } else if (r.data.message === "Password mismatch") {
+                    console.log("Incorrect Password")
+                    this.setState({incorrectPassword: true})
+
+                } else if (r.data.message === "Already logged in") {
+                    console.log("Already logged in")
+                }
             }
         )
 
@@ -37,19 +56,23 @@ export default class Login extends React.Component {
                     </div>
                     <div className="form">
                         <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input type="text" name='email' placeholder='email'
-                                   onChange={e => this.setState({email: e.target.value})}/>
+                            <InputLabel>Email</InputLabel>
+                            <TextField type="text" name='email' placeholder='Email'
+                                       onChange={e => this.setState({email: e.target.value})}/>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" name='password' placeholder='password'
-                                   onChange={e => this.setState({password: e.target.value})}/>
+                            <InputLabel>Password</InputLabel>
+                            <TextField type="password" name='password' placeholder='Password'
+                                       error={this.state.incorrectPassword}
+                                       helperText={this.state.incorrectPassword ? "Incorrect password" : ""}
+                                       onChange={e => this.setState({password: e.target.value})}/>
                         </div>
                     </div>
                 </div>
                 <div className="footer">
-                    <button type="button" className="btn" onClick={this.login}>Login</button>
+                    <Button type="button" variant="contained" color="secondary" disabled={!this.isFormValid()}
+                            onClick={this.login}
+                            helperText={this.isFormValid() ? "" : "Please fill all fields."}>Login</Button>
                 </div>
             </div>
         );
