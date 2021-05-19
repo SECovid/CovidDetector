@@ -1,20 +1,25 @@
 from flask import Blueprint
+from flask_cors import cross_origin
 from ml.prediction import predict_covid
 from ml.spectogram import audio_processing
 from flask import Flask, request, jsonify
-from backend import authentication
+from backend.authentication import authentication
 from backend import database
-#import tensorflow as tf
+from tensorflow import keras
 import base64
 import os
 import json
 from flask import jsonify
-#model = tf.keras.models.load_model('ml/model/trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf')
+
+model = keras.models.load_model('ml/model/trained_model/CNN_COUGH_COVID_DETECTOR_MODEL_tf')
 make_prediction_blueprint = Blueprint('make_prediction', __name__)
 
-@make_prediction_blueprint.route('/fast_prediction',methods=['POST'])
+
+@make_prediction_blueprint.route('/fast_prediction', methods=['POST'])
+@cross_origin(origin='*', headers=['Content- Type', 'Authorization'])
 def make_fast_prediction():
     try:
+        print(request.json)
         encoded_string = request.json['data']
 
         temp_filename = "temp.wav"
@@ -26,12 +31,12 @@ def make_fast_prediction():
         wav_file.close()
         if os.path.exists(temp_filename):
             print('CLOSING')
-           # os.remove(temp_filename)
+        # os.remove(temp_filename)
         else:
             print("The file does not exist")
 
         # If logged in should add it to history
-        if(authentication.isLoggedIn(request)):
+        if (authentication.isLoggedIn(request)):
             user_id = authentication.isLoggedIn(request)['id']
             request.json['user_id'] = user_id
             request.json['covid_percentage'] = result[0]
@@ -43,12 +48,7 @@ def make_fast_prediction():
         return json.dumps({"results": []})
 
 
-
-
-
-
-
-@make_prediction_blueprint.route('/accurate_prediction',methods=['POST'])
+@make_prediction_blueprint.route('/accurate_prediction', methods=['POST'])
 def make_accurate_prediction():
     try:
         spectrograms = []
@@ -65,10 +65,10 @@ def make_accurate_prediction():
                 os.remove(temp_filename)
             else:
                 print("The file does not exist")
-        result = predict_covid.make_accurate_prediction(spectrograms,model)
+        result = predict_covid.make_accurate_prediction(spectrograms, model)
 
         # If logged in should add it to history
-        if(authentication.isLoggedIn(request)):
+        if (authentication.isLoggedIn(request)):
             user_id = authentication.isLoggedIn(request)['id']
             request.json['user_id'] = user_id
             request.json['covid_percentage'] = result[0]
@@ -77,4 +77,3 @@ def make_accurate_prediction():
         return json.dumps({"results": result.tolist()})
     except:
         return json.dumps({"results": []})
-

@@ -5,9 +5,11 @@ from flask import Blueprint
 from flask import current_app, flash, jsonify, make_response, redirect, request, url_for
 import bcrypt
 from backend import database
+
 auth_blueprint = Blueprint('auth', __name__)
 
-@auth_blueprint.route('/login',methods=['POST'])
+
+@auth_blueprint.route('/login', methods=['POST'])
 def login():
     # get the post data
     if isLoggedIn(request):
@@ -18,7 +20,6 @@ def login():
         }
         return make_response(jsonify(responseObject)), 406
 
-
     post_data = request.json
     try:
         # Check if correct pass
@@ -26,17 +27,16 @@ def login():
         input_password = post_data['password']
         role = post_data['role']
 
-        if(role == 'admin'):
-            #Get  account from admin table
+        if (role == 'admin'):
+            # Get  account from admin table
             rows = database.get_admin(username)
             id = rows[0][0]
             password = rows[0][2]
         else:
-            #Get account from user table
+            # Get account from user table
             rows = database.get_user(username)
             id = rows[0][0]
             password = rows[0][8]
-
 
         if bcrypt.checkpw(input_password.encode("utf-8"), password.encode("utf-8")):
             print("Password match!")
@@ -47,8 +47,7 @@ def login():
             }
             return make_response(jsonify(responseObject)), 400
 
-        auth_token = encode_auth_token(id,username,role)
-
+        auth_token = encode_auth_token(id, username, role)
 
         if auth_token:
             responseObject = {
@@ -66,8 +65,7 @@ def login():
         return make_response(jsonify(responseObject)), 400
 
 
-
-@auth_blueprint.route('/register',methods=['POST'])
+@auth_blueprint.route('/register', methods=['POST'])
 def register():
     post_data = request.json
     try:
@@ -89,7 +87,6 @@ def register():
         return make_response(jsonify(responseObject)), 400
 
 
-
 def isLoggedIn(request):
     # get the auth token
     auth_header = request.headers.get('Authorization')
@@ -105,6 +102,7 @@ def isLoggedIn(request):
         print('NO TOKEN')
         return
 
+
 def isLoggedInAdmin(request):
     # get the auth token
     auth_header = request.headers.get('Authorization')
@@ -115,7 +113,7 @@ def isLoggedInAdmin(request):
         auth_token = ''
     if auth_token:
         resp = decode_auth_token(auth_token)
-        if(resp['role'] == 'admin'):
+        if (resp['role'] == 'admin'):
             return resp
         else:
             return
@@ -123,7 +121,8 @@ def isLoggedInAdmin(request):
         print('NO TOKEN')
         return
 
-def encode_auth_token(user_id,username,role):
+
+def encode_auth_token(user_id, username, role):
     """
     Generates the Auth Token
     :return: string
@@ -134,7 +133,7 @@ def encode_auth_token(user_id,username,role):
             'iat': datetime.datetime.utcnow(),
             'id': user_id,
             'username': username,
-            'role': role #Normal user or admin
+            'role': role  # Normal user or admin
         }
         return jwt.encode(
             payload,
