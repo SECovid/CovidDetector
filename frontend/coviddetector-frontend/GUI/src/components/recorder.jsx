@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box"
 import {Typography} from "@material-ui/core";
 import './styles.scss'
 import isLoggedIn from "../functions/isLoggedIn";
+import Loading from "../functions/loading";
 
 
 export default class Recorder extends React.Component {
@@ -18,6 +19,7 @@ export default class Recorder extends React.Component {
             date = today.getFullYear() + '-' + (today.getMonth() + 1)  + '-' + today.getDate();
 
         this.state = {
+            pending: false,
             recordState: null,
             counter: 0,
             seconds: 0,
@@ -45,7 +47,7 @@ export default class Recorder extends React.Component {
     }
 
     start = () => {
-        this.setState({counter: 0})
+        this.setState({counter: 0, test_completed: false})
         this.counting = setInterval(this.countUp, 10);
         this.setState({
             recordState: RecordState.START
@@ -78,15 +80,18 @@ export default class Recorder extends React.Component {
             var base64data = reader.result;
             base64data = base64data.substr(base64data.indexOf(',') + 1);
             if (!isLoggedIn()) {
+                this.setState({pending: true})
                 send_request('prediction/fast_prediction', 'POST', {'data': base64data}).then(r => {
                     console.log(r);
                     results = r.data.results;
                     this.updateStates(results)
+                    this.setState({pending: false})
 
                 })
             } else {
                 var survey = this.props.surveyResults;
                 console.log(survey)
+                this.setState({pending: true})
                 send_request('prediction/fast_prediction', 'POST', {
                     'data': base64data,
                     'date': this.state.currentDate,
@@ -105,7 +110,8 @@ export default class Recorder extends React.Component {
                 }).then(r => {
                     console.log(r);
                     results = r.data.results;
-                    this.updateStates(results)
+                    this.updateStates(results);
+                    this.setState({pending: false})
 
                 })
 
@@ -138,6 +144,7 @@ export default class Recorder extends React.Component {
                     </IconButton>
                 </div>
                 <Typography>{(this.state.seconds < 10) ? '0' + this.state.seconds : this.state.milliseconds} : {(this.state.milliseconds < 10) ? '0' + this.state.milliseconds : this.state.milliseconds}</Typography>
+                <Typography>{this.state.pending?<Loading/>:''}</Typography>
                 <Typography>{this.state.test_completed ? <>Chance of having COVID:
                 {this.round(this.state.covid_positive)}% <br/><i>Remember that this is an initial screening and does<b> not </b>replace traditional tests</i></> : ''} < /Typography>
             </Box>

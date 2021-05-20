@@ -10,7 +10,7 @@ class HelpOutPage extends React.Component {
 
     render() {
         return (<Box container spacing={2} justify="center">
-                <Typography align='center' variant='h1' color='secondary' >Record now to help us out!</Typography>
+                <Typography align='center' variant='h1' color='secondary'  >Record now to help us out!</Typography>
                 <Helpout/>
             </Box>
         )

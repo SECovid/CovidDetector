@@ -18,7 +18,6 @@ make_prediction_blueprint = Blueprint('make_prediction', __name__)
 @make_prediction_blueprint.route('/fast_prediction', methods=['POST'])
 def make_fast_prediction():
     try:
-        print(request.json)
         encoded_string = request.json['data']
 
         temp_filename = "temp.wav"
