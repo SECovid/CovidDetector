@@ -96,4 +96,3 @@ def number_of_trainin_data():
             'message': 'Couldn\'t get training size'
         }
         return make_response(jsonify(responseObject)), 400
-    
