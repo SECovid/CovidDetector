@@ -159,7 +159,8 @@ export default class RecorderAccurate extends React.Component {
                     {this.round(this.state.covid_positive)}% <br/><i>Remember that this is an initial screening and does<b> not </b>replace
                         traditional tests</i></> : ''} < /Typography>
             </Box>
-        </div>)
+        </div>
+    )
 
     }
 }

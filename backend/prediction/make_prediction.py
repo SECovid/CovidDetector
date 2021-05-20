@@ -69,7 +69,7 @@ def make_accurate_prediction():
         if (authentication.isLoggedIn(request)):
             user_id = authentication.isLoggedIn(request)['id']
             request.json['user_id'] = user_id
-            request.json['covid_percentage'] = result[0]
+            request.json['covid_percentage'] = result[0].tolist()
             database.add_covid_report(request.json)
 
         return json.dumps({"results": result.tolist()})
