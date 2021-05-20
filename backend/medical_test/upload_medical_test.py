@@ -20,7 +20,8 @@ def upload_medical_test():
         decoded_string = base64.b64decode(encoded_string)
         wav_file.write(decoded_string)
 
-        add_medical_test.add_medical_test_to_dataset(temp_filename,test_result)
+        add_medical_test.add_medical_test_to_dataset(temp_filename, test_result)
+        print("HELLO")
 
 
         wav_file.close()

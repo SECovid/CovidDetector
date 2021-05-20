@@ -7,7 +7,7 @@ from backend import database
 
 covid_reports_blueprint = Blueprint('covid_reports', __name__)
 
-@covid_reports_blueprint.route('/',methods=['GET'])
+@covid_reports_blueprint.route('/table',methods=['GET'])
 def get_covid_reports():
     if (authentication.isLoggedIn(request)):
         user_id = authentication.isLoggedIn(request)['id']
