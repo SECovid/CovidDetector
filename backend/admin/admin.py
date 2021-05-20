@@ -12,18 +12,25 @@ admin_blueprint = Blueprint('admin', __name__)
 #Rollback to previous models
 @admin_blueprint.route('/retrain',methods=['POST'])
 def retrain():
-    post_data = request.json
+    if(authentication.isLoggedInAdmin(request)):
+        post_data = request.json
 
-    try:
-        retraining_model.retraining_pipeline(post_data['date'])
-    except:
-        retraining_model.retraining_pipeline()
+        try:
+            retraining_model.retraining_pipeline(post_data['date'])
+        except:
+            retraining_model.retraining_pipeline()
 
-    responseObject = {
-        'status': 'success',
-        'message': 'Successfully retrained the model'
-    }
-    return make_response(jsonify(responseObject)), 200
+        responseObject = {
+            'status': 'success',
+            'message': 'Successfully retrained the model'
+        }
+        return make_response(jsonify(responseObject)), 200
+    else:
+        responseObject = {
+            'status': 'fail',
+            'message': 'Not logged in as admin'
+        }
+        return make_response(jsonify(responseObject)), 400
 
 
 
@@ -89,3 +96,4 @@ def number_of_trainin_data():
             'message': 'Couldn\'t get training size'
         }
         return make_response(jsonify(responseObject)), 400
+    
