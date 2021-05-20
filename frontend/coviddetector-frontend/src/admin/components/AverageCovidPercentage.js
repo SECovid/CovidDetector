@@ -15,6 +15,7 @@ import {
     const getAverageCovid= () =>{
       send_request('admin/average_covid_percentage','GET').then(
         res => {
+            console.log("Result", res)
           setPercentages((res['data']['average']*100).toFixed(2))
         }
       )

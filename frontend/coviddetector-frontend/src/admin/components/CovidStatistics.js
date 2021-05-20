@@ -140,17 +140,17 @@ const CovidStatistics = (props) => {
             <InputLabel>Factor</InputLabel>
             <Select onChange={handleChange} style={{ width: 100 }}>
          
-              <MenuItem value="travel_abroad_14days">travel_abroad_14days</MenuItem>
-              <MenuItem value="contact_with_infected_person_14days">contact_with_infected_person_14days</MenuItem>
-              <MenuItem value="visited_healthcare_facility_14days">visited_healthcare_facility_14days</MenuItem>
-              <MenuItem value="tested_positive_14days">tested_positive_14days</MenuItem>
-              <MenuItem value="fever">fever</MenuItem>
-              <MenuItem value="breathing_difficulty">breathing_difficulty</MenuItem>
-              <MenuItem value="sore_throat">sore_throat</MenuItem>
-              <MenuItem value="cough">cough</MenuItem>
-              <MenuItem value="no_taste">no_taste</MenuItem>
-              <MenuItem value="no_smell">no_smell</MenuItem>
-              <MenuItem value="headache">headache</MenuItem>
+              <MenuItem value="travel_abroad_14days">Traveled abroad in the past 14 days</MenuItem>
+              <MenuItem value="contact_with_infected_person_14days">Had contact with an infected person in the past 14 days</MenuItem>
+              <MenuItem value="visited_healthcare_facility_14days">Visited a healthcare facility in the past 14 days</MenuItem>
+              <MenuItem value="tested_positive_14days">Tested positive for covid in the past 14 days</MenuItem>
+              <MenuItem value="fever">Fever > 38°C</MenuItem>
+              <MenuItem value="breathing_difficulty">Breathing difficulties</MenuItem>
+              <MenuItem value="sore_throat">Sore throat</MenuItem>
+              <MenuItem value="cough">Cough</MenuItem>
+              <MenuItem value="no_taste">No taste</MenuItem>
+              <MenuItem value="no_smell">No smell</MenuItem>
+              <MenuItem value="headache">Headache</MenuItem>
             </Select>
           </FormControl>
         }
