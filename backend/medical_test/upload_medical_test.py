@@ -11,6 +11,7 @@ upload_medical_test_blueprint = Blueprint('upload_medical_test', __name__)
 @upload_medical_test_blueprint.route('/upload_medical_test',methods=['POST'])
 def upload_medical_test():
     try:
+        print(request.json)
         encoded_string = request.json['data']
         test_result = request.json['test_result']
 
@@ -21,6 +22,7 @@ def upload_medical_test():
         wav_file.write(decoded_string)
 
         add_medical_test.add_medical_test_to_dataset(temp_filename,test_result)
+        print("HELLO")
 
 
         wav_file.close()

@@ -4,18 +4,20 @@ import send_request from "../APIcalls";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardVoiceIcon from "@material-ui/icons/KeyboardVoice";
 import Box from "@material-ui/core/Box"
-import {Typography} from "@material-ui/core";
+import {Switch, Typography} from "@material-ui/core";
 import './styles.scss'
 import isLoggedIn from "../functions/isLoggedIn";
+import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 
-export default class Recorder extends React.Component {
+export default class Helpout extends React.Component {
     counting;
 
     constructor(props) {
         super(props);
         var today = new Date(),
-            date = today.getFullYear() + '-' + (today.getMonth() + 1)  + '-' + today.getDate();
+            date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
         this.state = {
             recordState: null,
@@ -23,9 +25,8 @@ export default class Recorder extends React.Component {
             seconds: 0,
             milliseconds: 0,
             test_completed: false,
-            covid_positive: null,
-            covid_negative: null,
-            currentDate: date
+            currentDate: date,
+            test_result: false
         };
         this.countUp = this.countUp.bind(this);
         this.start = this.start.bind(this);
@@ -77,38 +78,14 @@ export default class Recorder extends React.Component {
         reader.onloadend = () => {
             var base64data = reader.result;
             base64data = base64data.substr(base64data.indexOf(',') + 1);
-            if (!isLoggedIn()) {
-                send_request('prediction/fast_prediction', 'POST', {'data': base64data}).then(r => {
-                    console.log(r);
-                    results = r.data.results;
-                    this.updateStates(results)
-
-                })
-            } else {
-                var survey = this.props.surveyResults;
-                console.log(survey)
-                send_request('prediction/fast_prediction', 'POST', {
+            if (isLoggedIn()) {
+                send_request('medical/upload_medical_test', 'POST', {
                     'data': base64data,
-                    'date': this.state.currentDate,
-                    'travel_abroad_14days': survey.travel_abroad_14days,
-                    'contact_with_infected_person_14days': survey.contact_with_infected_person_14days,
-                    'visited_healthcare_facility_14days': survey.visited_healthcare_facility_14days,
-                    'tested_positive_14days': survey.tested_positive_14days,
-                    'fever': survey.fever,
-                    'breathing_difficulty': survey.breathing_difficulty,
-                    'sore_throat': survey.sore_throat,
-                    'cough': survey.cough,
-                    'no_taste': survey.no_taste,
-                    'no_smell': survey.no_smell,
-                    'headache': survey.headache
-
+                    'test_result': (this.state.test_result ? 1 : 0)
                 }).then(r => {
                     console.log(r);
-                    results = r.data.results;
-                    this.updateStates(results)
 
                 })
-
             }
         }
     }
@@ -117,12 +94,27 @@ export default class Recorder extends React.Component {
         return (Math.round((num + Number.EPSILON) * 100))
     }
 
+    handleChange(event) {
+        this.setState({test_result: (this.state.test_result ? 1 : 0)})
+    };
+
 
     render() {
         const {recordState} = this.state
 
         return (<div className="App">
-            <Box marginTop={5}>
+            <Box marginTop={5} alignItems='center' justifyContent='center' display='flex' flexDirection='column'>
+                <Typography>Did you test positive or negative for COVID on your medical test?</Typography>
+                <Grid component="label" container alignItems="center" spacing={1} justify='center'>
+                    <Grid item>Negative</Grid>
+                    <Grid item>
+                        <FormControlLabel m
+                            control={<Switch color='secondary'
+                                             name="test_result"/>}
+                        />
+                    </Grid>
+                    <Grid item>Positive</Grid>
+                </Grid>
                 <AudioReactRecorder
                     state={recordState}
                     onStop={this.onStop}
@@ -138,8 +130,7 @@ export default class Recorder extends React.Component {
                     </IconButton>
                 </div>
                 <Typography>{(this.state.seconds < 10) ? '0' + this.state.seconds : this.state.milliseconds} : {(this.state.milliseconds < 10) ? '0' + this.state.milliseconds : this.state.milliseconds}</Typography>
-                <Typography>{this.state.test_completed ? <>Chance of having COVID:
-                {this.round(this.state.covid_positive)}% <br/><i>Remember that this is an initial screening and does<b> not </b>replace traditional tests</i></> : ''} < /Typography>
+                <Typography>{this.state.test_completed ? <>Thank you for your help!</> : ''} < /Typography>
             </Box>
         </div>)
 

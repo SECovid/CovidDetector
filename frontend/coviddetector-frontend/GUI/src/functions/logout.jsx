@@ -1,3 +1,5 @@
+import {Redirect} from "react-router-dom";
+import React from "react";
 
 export default function logout() {
     const token = localStorage.getItem('token')

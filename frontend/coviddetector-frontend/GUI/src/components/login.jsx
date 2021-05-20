@@ -1,9 +1,10 @@
 import React from 'react';
-import loginImg from '../login.svg';
+import loginImg from '../images/login.svg';
 import './styles.scss'
 import send_request from "../APIcalls";
 import Button from "@material-ui/core/Button";
 import {InputLabel, TextField} from "@material-ui/core";
+import {Redirect} from 'react-router-dom';
 import isLoggedIn from "../functions/isLoggedIn";
 
 export default class Login extends React.Component {
@@ -12,7 +13,8 @@ export default class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-            incorrectPassword: false
+            incorrectPassword: false,
+            redirect: false
         }
         this.login = this.login.bind(this);
     }
@@ -25,7 +27,7 @@ export default class Login extends React.Component {
 
     login() {
         send_request('/auth/login', 'POST', {
-            'username': this.state.email,
+            'username': this.state.email.toLowerCase(),
             'password': this.state.password,
             'role': "regular"
         }).then(r => {
@@ -34,6 +36,7 @@ export default class Login extends React.Component {
                     const token = r.data.auth_token;
                     this.setState({incorrectPassword: false})
                     localStorage.setItem('token', token);
+                    this.setState({ redirect: true })
                 } else if (r.data.message === "Password mismatch") {
                     console.log("Incorrect Password")
                     this.setState({incorrectPassword: true})
@@ -70,9 +73,9 @@ export default class Login extends React.Component {
                     </div>
                 </div>
                 <div className="footer">
+                    { this.state.redirect ? (<Redirect push to="/"/>) : null }
                     <Button type="button" variant="contained" color="secondary" disabled={!this.isFormValid()}
-                            onClick={this.login}
-                            helperText={this.isFormValid() ? "" : "Please fill all fields."}>Login</Button>
+                            onClick={this.login}>Login</Button>
                 </div>
             </div>
         );

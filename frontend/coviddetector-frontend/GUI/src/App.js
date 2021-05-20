@@ -1,6 +1,7 @@
 import React from "react";
 import RecordPage from "./pages/RecordPage";
 import LoginPage from "./pages/LoginPage";
+import HistoryPage from "./pages/HistoryPage";
 import NavBar from "./components/navbar";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -8,19 +9,17 @@ import {blue, red} from '@material-ui/core/colors';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link,
-    useRouteMatch,
-    useParams
+    Route
 } from "react-router-dom";
+import HelpOutPage from "./pages/HelpOutPage";
 
 
 const theme = createMuiTheme({
     palette: {
-        primary: {
+        secondary: {
             main: blue.A700,
         },
-        secondary: {
+        primary: {
             main: red.A700,
         },
     },
@@ -44,12 +43,24 @@ class App extends React.Component {
                         <LoginPage/>
                     </ThemeProvider>
                 </Route>
+                <Route path="/history">
+                    <ThemeProvider theme={theme}>
+                        <NavBar/>
+                        <HistoryPage/>
+                    </ThemeProvider>
+                </Route><Route path="/helpOut">
+                <ThemeProvider theme={theme}>
+                    <NavBar/>
+                    <HelpOutPage/>
+                </ThemeProvider>
+            </Route>
                 <Route path="/">
                     <ThemeProvider theme={theme}>
                         <NavBar/>
-                        <RecordPage/>
+                        <RecordPage />
                     </ThemeProvider>
                 </Route>
+
             </Switch>
         </Router>
     )

@@ -1,3 +1,13 @@
+canvas{
+  border-radius: 25px;
+ // background: #2962ff;;
+  background-image: url(../images/cough.jpg);
+  background-repeat: no-repeat;
+  padding: 2px;
+  width: 500px;
+  height: 250px;
+}
+
 .base-container {
   width: 100%;
   display: flex;

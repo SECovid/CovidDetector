@@ -16,7 +16,6 @@ make_prediction_blueprint = Blueprint('make_prediction', __name__)
 
 
 @make_prediction_blueprint.route('/fast_prediction', methods=['POST'])
-@cross_origin(origin='*', headers=['Content- Type', 'Authorization'])
 def make_fast_prediction():
     try:
         print(request.json)
@@ -39,7 +38,7 @@ def make_fast_prediction():
         if (authentication.isLoggedIn(request)):
             user_id = authentication.isLoggedIn(request)['id']
             request.json['user_id'] = user_id
-            request.json['covid_percentage'] = result[0]
+            request.json['covid_percentage'] = result[0].tolist()
             database.add_covid_report(request.json)
         return json.dumps({"results": result.tolist()})
 

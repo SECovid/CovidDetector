@@ -34,7 +34,7 @@ export default class Register extends React.Component {
             'gender': this.state.gender,
             'country': this.state.country,
             'address': this.state.address,
-            'email': this.state.email,
+            'email': this.state.email.toLowerCase(),
             'password': this.state.password,
         }).then(r => console.log(r))
     }

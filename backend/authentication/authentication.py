@@ -18,7 +18,7 @@ def login():
             'status': 'fail',
             'message': 'Already logged in'
         }
-        return make_response(jsonify(responseObject)), 200
+        return make_response(jsonify(responseObject)), 406
 
     post_data = request.json
     try:
@@ -45,7 +45,7 @@ def login():
                 'status': 'fail',
                 'message': 'Password mismatch'
             }
-            return make_response(jsonify(responseObject)), 200
+            return make_response(jsonify(responseObject)), 400
 
         auth_token = encode_auth_token(id, username, role)
 

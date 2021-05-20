@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 from backend.authentication.authentication import auth_blueprint
 from backend.medical_test.upload_medical_test import upload_medical_test_blueprint
@@ -17,8 +17,7 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
-    app.config['CORS_HEADERS'] = 'Content-Type'
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    CORS(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
