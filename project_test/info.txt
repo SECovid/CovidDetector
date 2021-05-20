@@ -1,0 +1,2 @@
+Locust test command: locust
+API test command: pytest test_api.py

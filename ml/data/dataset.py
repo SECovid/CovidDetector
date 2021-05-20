@@ -6,7 +6,12 @@ collection = db["CoughDataset"]
 
 #Get all data before a specific date
 def get_all_data(date = dt.datetime.utcnow()):
-    data = collection.find({"date":{"$lte":date}})
+    data = collection.find()
+    print('GETTING ALL DATA' ,data)
+    return data
+
+def get_all_data_size(date = dt.datetime.utcnow()):
+    data = collection.estimated_document_count()
     return data
 
 #Insert a data point

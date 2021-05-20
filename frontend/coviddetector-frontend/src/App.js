@@ -1,3 +1,4 @@
+
 import React from "react";
 import RecordPage from "./pages/RecordPage";
 import LoginPage from "./pages/LoginPage";
@@ -65,7 +66,6 @@ class App extends React.Component {
         </Router>
     )
     }
-
 }
 
 export default App;

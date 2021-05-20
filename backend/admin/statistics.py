@@ -19,11 +19,7 @@ def getStatisticsTime():
     return covidTime
 
 
-def getCountryStatistics(country):
-    covidCountry = database.get_covid_country(country)
-    covidCountry = [item for t in covidCountry  for item in t]
-    if len( covidCountry) != 0:
-        average = mean(covidCountry)
-    else:
-        average = 0
-    return average
+def getCountryStatistics():
+    covidCountry = database.get_covid_country()
+
+    return covidCountry
