@@ -25,6 +25,12 @@ const theme = createMuiTheme({
             main: hexToRgb('#ffffff'),
         },
     },
+    typography: {
+        fontSize: 14,
+        fontFamily: [
+            "Roboto", "Helvetica", "Arial", 'sans-serif',
+        ].join(','),
+    },
 });
 
 class App extends React.Component {

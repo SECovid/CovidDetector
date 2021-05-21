@@ -19,7 +19,7 @@ class HistoryPage extends React.Component {
             >Help Out</Button>
         </Link></Box>
             <Typography
-                align="center" variant="h1">Testing History</Typography>
+                align="center" variant="h1" color="secondary">Testing History</Typography>
             <HistoryTable/></div>)
     }
 

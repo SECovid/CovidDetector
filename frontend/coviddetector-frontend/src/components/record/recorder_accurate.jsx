@@ -134,8 +134,8 @@ export default class RecorderAccurate extends React.Component {
     render() {
         const {recordState} = this.state
 
-        return (<div className="App">
-            <Box marginTop={5}>
+        return (
+            <>
                 <AudioReactRecorder
                     state={recordState}
                     onStop={this.onStop}
@@ -147,20 +147,17 @@ export default class RecorderAccurate extends React.Component {
 
                 <div onClick={(recordState === RecordState.START) ? this.stop : this.start}
                      style={{textAlign: "center"}}>
-                    <IconButton color="secondary"
+                    <IconButton color="primary"
                     >
                         <KeyboardVoiceIcon style={{fontSize: 60}}/>
                     </IconButton>
                 </div>
-                <Typography>{'Record ' +  (this.props.N - this.state.base64data_array.length) + ' more times for accurate results.'}</Typography>
-                <Typography>{(this.state.seconds < 10) ? '0' + this.state.seconds : this.state.milliseconds} : {(this.state.milliseconds < 10) ? '0' + this.state.milliseconds : this.state.milliseconds}</Typography>
-                <Typography>{this.state.pending?<Loading/>:''}</Typography>
-                <Typography>{this.state.test_completed ? <>Chance of having COVID:
+                <Typography color="primary">{'Record ' + (this.props.N - this.state.base64data_array.length) + ' more times for accurate results.'}</Typography>
+                <Typography color="primary">{(this.state.seconds < 10) ? '0' + this.state.seconds : this.state.milliseconds} : {(this.state.milliseconds < 10) ? '0' + this.state.milliseconds : this.state.milliseconds}</Typography>
+                <Typography color="primary">{this.state.pending ? <Loading/> : ''}</Typography>
+                <Typography color="primary">{this.state.test_completed ? <>Chance of having COVID:
                     {this.round(this.state.covid_positive)}% <br/><i>Remember that this is an initial screening and does<b> not </b>replace
-                        traditional tests</i></> : ''} < /Typography>
-            </Box>
-        </div>
-    )
+                        traditional tests</i></> : ''} < /Typography></>)
 
     }
 }
