@@ -11,7 +11,7 @@ export default function logout() {
     console.log("HELLO")
     if (token != null)
     {
-        if(isAdmin != "admin"){
+        if(window.location.pathname == "/"){
             window.location.reload()
         }
         localStorage.removeItem('token')
