@@ -1,12 +1,12 @@
 import React from "react";
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
-import send_request from "../APIcalls";
+import send_request from "../../API/APIcalls";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardVoiceIcon from "@material-ui/icons/KeyboardVoice";
 import Box from "@material-ui/core/Box"
 import {Switch, Typography} from "@material-ui/core";
-import './styles.scss'
-import isLoggedIn from "../functions/isLoggedIn";
+import '../styles.scss'
+import isLoggedIn from "../../functions/isLoggedIn";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 

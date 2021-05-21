@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import send_request from "../APIcalls";
+import send_request from "../../API/APIcalls";
 import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles({

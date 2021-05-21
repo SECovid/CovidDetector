@@ -6,11 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import loginImg from "../images/login.svg";
+import loginImg from "../../images/login.svg";
 import {InputLabel, TextField} from "@material-ui/core";
 import {Redirect} from "react-router-dom";
-import send_request from "../APIcalls";
-import isLoggedIn from "../functions/isLoggedIn";
+import send_request from "../../API/APIcalls";
+import isLoggedIn from "../../functions/isLoggedIn";
 
 export default function SignInAsAdminDialog() {
     const [open, setOpen] = React.useState(false);

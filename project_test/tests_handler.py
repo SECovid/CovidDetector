@@ -1,5 +1,6 @@
-from project_test import test_model
 import unittest
+
+from project_test.unitTests import test_model
 
 
 def run_test():

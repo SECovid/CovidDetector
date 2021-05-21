@@ -1,7 +1,7 @@
 import React from "react";
 import '../App.css'
-import Login from "../components/login";
-import Register from "../components/register"
+import Login from "../components/authentication/login";
+import Register from "../components/authentication/register"
 
 
 class LoginPage extends React.Component{

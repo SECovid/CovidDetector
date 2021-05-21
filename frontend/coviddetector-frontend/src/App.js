@@ -12,7 +12,7 @@ import {
     Route
 } from "react-router-dom";
 import HelpOutPage from "./pages/HelpOutPage";
-import AdminPage from "./admin/AdminPage";
+import AdminPage from "./pages/AdminPage";
 import adminTheme from "./themes/index";
 
 

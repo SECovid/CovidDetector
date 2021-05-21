@@ -12,7 +12,7 @@ import KeyboardVoiceIcon from "@material-ui/icons/KeyboardVoice";
 import AccountCircleIcon from '@material-ui/icons/AccountBox';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SignInAsAdminDialog from "./signInAsAdminDialog";
+import SignInAsAdminDialog from "./authentication/signInAsAdminDialog";
 
 
 const useStyles = makeStyles((theme) => ({

@@ -1,13 +1,13 @@
 import React from "react";
 import AudioReactRecorder, {RecordState} from 'audio-react-recorder'
-import send_request from "../APIcalls";
+import send_request from "../../API/APIcalls";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardVoiceIcon from "@material-ui/icons/KeyboardVoice";
 import Box from "@material-ui/core/Box"
 import {Typography} from "@material-ui/core";
-import './styles.scss'
-import isLoggedIn from "../functions/isLoggedIn";
-import Loading from "../functions/loading";
+import '../styles.scss'
+import isLoggedIn from "../../functions/isLoggedIn";
+import Loading from "../../functions/loading";
 
 
 export default class Recorder extends React.Component {

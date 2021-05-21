@@ -5,14 +5,14 @@ import {
   Grid
 } from '@material-ui/core';
 
-import AverageCovidPercentage from '../components/AverageCovidPercentage';
-import ModelHealth from '../components/ModelHealth';
-import NumberOfTrainingDataUsed from '../components/NumberOfTrainingDataUsed';
-import TotalNumberOfDataPoints from '../components/TotalNumberOfDataPoints';
-import CovidMap from '../components/CovidMap';
-import CovidStatistics from '../components/CovidStatistics'
-import CovidPercentagesPlot from '../components/CovidPercentagesPlot';
-import ModelRetraining from '../components/ModelRetraining';
+import AverageCovidPercentage from './AverageCovidPercentage';
+import ModelHealth from './ModelHealth';
+import NumberOfTrainingDataUsed from './NumberOfTrainingDataUsed';
+import TotalNumberOfDataPoints from './TotalNumberOfDataPoints';
+import CovidMap from './CovidMap';
+import CovidStatistics from './CovidStatistics'
+import CovidPercentagesPlot from './CovidPercentagesPlot';
+import ModelRetraining from './ModelRetraining';
 const Dashboard = () => (
   <>
 

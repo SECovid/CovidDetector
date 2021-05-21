@@ -1,9 +1,9 @@
 import React from "react";
-import Recorder from "../components/recorder"
-import RecorderAccurate from "../components/recorder_accurate";
+import Recorder from "../components/record/recorder"
+import RecorderAccurate from "../components/record/recorder_accurate";
 import {Typography, Box, Switch} from "@material-ui/core";
 import isLoggedIn from "../functions/isLoggedIn";
-import SymptomsSurvey from "../components/symptoms_survey";
+import SymptomsSurvey from "../components/record/symptoms_survey";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import loginImg from '../images/login.svg';
-import './styles.scss'
-import send_request from "../APIcalls";
+import loginImg from '../../images/login.svg';
+import '../styles.scss'
+import send_request from "../../API/APIcalls";
 import Button from "@material-ui/core/Button";
 import {InputLabel, TextField} from "@material-ui/core";
 import {Redirect} from 'react-router-dom';
-import isLoggedIn from "../functions/isLoggedIn";
+import isLoggedIn from "../../functions/isLoggedIn";
 
 export default class Login extends React.Component {
     constructor(props) {

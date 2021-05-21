@@ -1,6 +1,6 @@
 import React from "react";
 import {Typography, Box} from "@material-ui/core";
-import Helpout from "../components/helpout";
+import Helpout from "../components/helpOut/helpout";
 
 
 class HelpOutPage extends React.Component {
