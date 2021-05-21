@@ -31,20 +31,32 @@ class RecordPage extends React.Component {
     render() {
         return (<Box container spacing={2} justify="center">
                 <Typography align='center' variant='h1' color='secondary'>COUGHVID test now!</Typography>
-                <Grid component="label" container alignItems="center" spacing={1} justify='center'>
-                    <Grid item>Fast Test</Grid>
-                    <Grid item>
-                        <FormControlLabel m
-                                          control={<Switch color='secondary' checked={this.state.accurate_test}
-                                                           onChange={this.handleChange}
-                                                           name="accurate.test"/>}
-                        />
-                    </Grid>
-                    <Grid item>Accurate Test</Grid>
-                </Grid>
-                {this.state.accurate_test ? <RecorderAccurate surveyResults={this.state} N={3}/> :
-                    <Recorder surveyResults={this.state}/>}
-                {isLoggedIn() ? <SymptomsSurvey updateSurveyResults={this.retrieveSurveyResults}/> : ''}
+                <div className="App">
+                    <Box marginTop={5}
+                         style={{
+                             backgroundColor: "#2962ff",
+                             padding: "50px",
+                             borderRadius: "25px",
+                             borderColor: "#ffffff",
+                             borderWidth: "2px"
+                         }}>
+                        <Grid component="label" container alignItems="center" spacing={1} justify='center'>
+                            <Grid item><Typography color="primary">Fast Test</Typography></Grid>
+                            <Grid item>
+                                <FormControlLabel m
+                                                  control={<Switch color='primary' checked={this.state.accurate_test}
+                                                                   onChange={this.handleChange}
+                                                                   name="accurate.test"/>}
+                                />
+                            </Grid>
+                            <Grid item><Typography color="primary">Accurate Test</Typography></Grid>
+                        </Grid>
+
+                        {this.state.accurate_test ? <RecorderAccurate surveyResults={this.state} N={3}/> :
+                            <Recorder surveyResults={this.state}/>}
+                        {isLoggedIn() ? <SymptomsSurvey updateSurveyResults={this.retrieveSurveyResults}/> : ''}
+                    </Box>
+                </div>
             </Box>
         )
     }

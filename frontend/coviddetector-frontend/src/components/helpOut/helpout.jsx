@@ -22,8 +22,7 @@ export default class Helpout extends React.Component {
         this.state = {
             recordState: null,
             counter: 0,
-            seconds: 0,
-            milliseconds: 0,
+            started: false,
             test_completed: false,
             currentDate: date,
             test_result: 0
@@ -36,18 +35,11 @@ export default class Helpout extends React.Component {
 
     countUp() {
         this.setState({counter: this.state.counter + 1});
-        this.counterToTime(this.state.counter);
-    }
-
-    counterToTime = (time) => {
-        this.setState({seconds: Math.floor(time / 100)});
-        this.setState({milliseconds: time - this.state.seconds * 100});
-
     }
 
     start = () => {
-        this.setState({counter: 0})
-        this.counting = setInterval(this.countUp, 10);
+        this.setState({counter: 0, started: true})
+        this.counting = setInterval(this.countUp, 1000);
         this.setState({
             recordState: RecordState.START
         })
@@ -56,15 +48,21 @@ export default class Helpout extends React.Component {
     stop = () => {
         clearInterval(this.counting)
         this.setState({
-            recordState: RecordState.STOP
+            recordState: RecordState.STOP,
+            started: false
         })
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.state.counter>2 && this.state.started){
+            this.stop()
+        }
+    }
+
 
     updateStates = (results) => {
         this.setState({
             test_completed: true,
-            covid_negative: results[0][0],
-            covid_positive: results[0][1]
         });
 
 
@@ -83,6 +81,7 @@ export default class Helpout extends React.Component {
                     'data': base64data,
                     'test_result': (this.state.test_result ? 1 : 0)
                 }).then(r => {
+                    this.updateStates()
                     console.log(r);
 
                 })
@@ -104,18 +103,26 @@ export default class Helpout extends React.Component {
         const {recordState} = this.state
 
         return (<div className="App">
-            <Box marginTop={5} alignItems='center' justifyContent='center' display='flex' flexDirection='column'>
-                <Typography>Did you test positive or negative for COVID on your medical test?</Typography>
+            <Box marginTop={5}
+                 style={{
+                     backgroundColor: "#2962ff",
+                     padding: "50px",
+                     borderRadius: "25px",
+                     borderColor: "#ffffff",
+                     borderWidth: "2px"
+                 }}>
+                <Typography color="primary">Did you test positive or negative for COVID on your medical
+                    test?</Typography>
                 <Grid component="label" container alignItems="center" spacing={1} justify='center'>
-                    <Grid item>Negative</Grid>
+                    <Grid item><Typography color="primary">Negative</Typography></Grid>
                     <Grid item>
                         <FormControlLabel m
-                                          control={<Switch color='secondary' checked={(this.state.test_result==1)}
+                                          control={<Switch color='primary' checked={(this.state.test_result == 1)}
                                                            onChange={this.handleChange}
                                                            name="test_result"/>}
                         />
                     </Grid>
-                    <Grid item>Positive</Grid>
+                    <Grid item><Typography color="primary">Positive</Typography></Grid>
                 </Grid>
                 <AudioReactRecorder
                     state={recordState}
@@ -125,14 +132,15 @@ export default class Helpout extends React.Component {
                     foregroundColor="rgb(0,0,0)"
                 />
                 <div onClick={(recordState === RecordState.START) ? this.stop : this.start}
-                     style={{textAlign: "center"}}>
-                    <IconButton color="secondary"
+                     style={{textAlign: "center"}} >
+                    <IconButton color="primary" disabled={(this.state.counter < 2) & (this.state.started)}
                     >
                         <KeyboardVoiceIcon style={{fontSize: 60}}/>
                     </IconButton>
                 </div>
-                <Typography>{(this.state.seconds < 10) ? '0' + this.state.seconds : this.state.milliseconds} : {(this.state.milliseconds < 10) ? '0' + this.state.milliseconds : this.state.milliseconds}</Typography>
-                <Typography>{this.state.test_completed ? <>Thank you for your help!</> : ''} < /Typography>
+                <Typography color="primary">{this.state.seconds}</Typography>
+                <Typography color="primary">{this.state.test_completed ? <>Thank you for your
+                    help!</> : ''} < /Typography>
             </Box>
         </div>)
 

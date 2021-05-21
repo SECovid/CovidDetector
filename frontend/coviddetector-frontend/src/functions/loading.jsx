@@ -18,7 +18,7 @@ export default function Loading() {
 
     return (
         <div className={classes.root}>
-            <CircularProgress color="secondary" />
+            <CircularProgress color="primary" />
         </div>
     );
 }
