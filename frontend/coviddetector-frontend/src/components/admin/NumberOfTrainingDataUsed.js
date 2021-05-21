@@ -64,30 +64,7 @@ import {
               </Avatar>
             </Grid>
           </Grid>
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              pt: 2
-            }}
-          >
-            <ArrowUpwardIcon sx={{ color: green[900] }} />
-            <Typography
-              variant="body2"
-              sx={{
-                color: green[900],
-                mr: 1
-              }}
-            >
-              16%
-            </Typography>
-            <Typography
-              color="textSecondary"
-              variant="caption"
-            >
-              Since last model
-            </Typography>
-          </Box>
+
         </CardContent>
       </Card>
     );

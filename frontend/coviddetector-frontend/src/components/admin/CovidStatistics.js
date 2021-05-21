@@ -30,6 +30,43 @@ const CovidStatistics = (props) => {
         const ifTrue = res['data']['ifTrue'] * 100
         const ifFalse = res['data']['ifFalse'] * 100
 
+
+        switch(factor) {
+          case "contact_with_infected_person_14days":
+            factor = "Contact with infected person"
+            break;
+          case "visited_healthcare_facility_14days":
+            factor = "Visited healthcare facility"
+            break;
+          case "tested_positive_14days":
+            factor = "Tested positive"
+            break;
+          case "fever":
+            factor = "Fever"
+            break;
+          case "breathing_difficulty":
+            factor = "Breathing difficulty"
+            break;
+          case "sore_throat":
+            factor = "Sore throat"
+            break;
+          case "cough":
+            factor = "Cough"
+            break;
+          case "no_taste":
+            factor = "No taste"
+            break;
+          case "no_smell":
+            factor = "No smell"
+            break;
+          case "headache":
+            factor = "Headache"
+            break;
+          default:
+            // code block
+        }
+
+
         setData({
           datasets: [
             {

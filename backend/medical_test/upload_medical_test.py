@@ -1,6 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, make_response
 from ml.spectogram import audio_processing
 from ml.data import add_medical_test
+from ml.data import dataset
 from flask import Flask, request, jsonify
 import base64
 import os
@@ -35,4 +36,22 @@ def upload_medical_test():
         return json.dumps({"result": "failed" })
 
 
+
+@upload_medical_test_blueprint.route('/get_medical_tests',methods=['GET'])
+def get_medical_tests():
+    try:
+        print('HELLO')
+        data = dataset.get_date_and_label()
+        print('GOT DATA')
+        print('Data: ',list(data))
+
+        responseObject = {
+            'status': 'success',
+            'message': 'Successfully logged in.',
+            'data': data
+        }
+        return make_response(jsonify(responseObject)), 200
+
+    except:
+        return json.dumps({"result": "failed" })
 
