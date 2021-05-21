@@ -13,6 +13,7 @@ import CovidMap from './CovidMap';
 import CovidStatistics from './CovidStatistics'
 import CovidPercentagesPlot from './CovidPercentagesPlot';
 import ModelRetraining from './ModelRetraining';
+import CovidLastReports from "./CovidLatestReports";
 const Dashboard = () => (
   <>
 
@@ -97,6 +98,8 @@ const Dashboard = () => (
           
           </Grid>
 
+
+
           <Grid
             item
             lg={6}
@@ -104,8 +107,29 @@ const Dashboard = () => (
             xl={6}
             xs={12}
           >
+              <Grid
+              container
+              spacing={3}
+          >
+                  <Grid
+                      item
+                      lg={12}
+                      md={12}
+                      xl={12}
+                      xs={12}
+                  >
            <ModelRetraining/>
-          
+                  </Grid>
+                  <Grid
+                      item
+                      lg={12}
+                      md={12}
+                      xl={12}
+                      xs={12}
+                  >
+                      <CovidLastReports/>
+                  </Grid>
+              </Grid>
           </Grid>
 
 
