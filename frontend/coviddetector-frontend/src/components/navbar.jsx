@@ -13,6 +13,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountBox';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SignInAsAdminDialog from "./authentication/signInAsAdminDialog";
+import covidIcon from "../images/covidIcon.png";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,9 +43,9 @@ export default function NavBar() {
             <AppBar position="static" color="secondary">
                 <Toolbar>
                     <Link className={classes.title} style={{textDecoration: 'none', color: 'white'}} to="/">
-                        <Button edge="start" className={classes.title} aria-label="menu" color="inherit" startIcon={<KeyboardVoiceIcon color="inherit"/>}>
+                        <Button edge="start" className={classes.title} aria-label="menu" color="inherit" startIcon={<img src={covidIcon} width={50} height={50}/>}>
                             <Typography variant="h6" className={classes.title} color="inherit">
-                                    COVID Detector
+                                    COVID Detector - <i>Corina</i>
                             </Typography>
                         </Button>
                     </Link>

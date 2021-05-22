@@ -30,7 +30,7 @@ class RecordPage extends React.Component {
 
     render() {
         return (<Box container spacing={2} justify="center">
-                <Typography align='center' variant='h1' color='secondary'>COUGHVID test now!</Typography>
+                <Typography align='center' variant='h1' color='secondary'>Corina, do I have COVID?</Typography>
                 <div className="App">
                     <Box marginTop={5}
                          style={{
@@ -38,7 +38,8 @@ class RecordPage extends React.Component {
                              padding: "50px",
                              borderRadius: "25px",
                              borderColor: "#ffffff",
-                             borderWidth: "2px"
+                             borderWidth: "2px",
+                             boxShadow: "0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19)",
                          }}>
                         <Grid component="label" container alignItems="center" spacing={1} justify='center'>
                             <Grid item><Typography color="primary">Fast Test</Typography></Grid>
@@ -49,7 +50,7 @@ class RecordPage extends React.Component {
                                                                    name="accurate.test"/>}
                                 />
                             </Grid>
-                            <Grid item><Typography color="primary">Accurate Test</Typography></Grid>
+                            <Grid item style={{marginLeft: "-20px"}}><Typography color="primary">Accurate Test</Typography></Grid>
                         </Grid>
 
                         {this.state.accurate_test ? <RecorderAccurate surveyResults={this.state} N={3}/> :

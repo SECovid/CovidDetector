@@ -25,8 +25,7 @@ export default class RecorderAccurate extends React.Component {
             base64data_array: [],
             recordState: null,
             counter: 0,
-            seconds: 0,
-            milliseconds: 0,
+            started: false,
             test_completed: false,
             covid_positive: null,
             covid_negative: null,
@@ -40,18 +39,12 @@ export default class RecorderAccurate extends React.Component {
 
     countUp() {
         this.setState({counter: this.state.counter + 1});
-        this.counterToTime(this.state.counter);
     }
 
-    counterToTime = (time) => {
-        this.setState({seconds: Math.floor(time / 100)});
-        this.setState({milliseconds: time - this.state.seconds * 100});
-
-    }
 
     start = () => {
-        this.setState({counter: 0, test_completed: false})
-        this.counting = setInterval(this.countUp, 10);
+        this.setState({counter: 0, test_completed: false, started: true})
+        this.counting = setInterval(this.countUp, 1000);
         this.setState({
             recordState: RecordState.START
         })
@@ -60,8 +53,15 @@ export default class RecorderAccurate extends React.Component {
     stop = () => {
         clearInterval(this.counting)
         this.setState({
-            recordState: RecordState.STOP
+            recordState: RecordState.STOP,
+            started: false
         })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.state.counter==2 && this.state.started){
+            this.stop()
+        }
     }
 
     updateStates = (results) => {
@@ -144,16 +144,16 @@ export default class RecorderAccurate extends React.Component {
                     foregroundColor="rgb(0,0,0)"
                 />
 
-
+                {this.state.started?<Typography color="primary" variant="h4" className="blink_me">Cough now</Typography>:''}
                 <div onClick={(recordState === RecordState.START) ? this.stop : this.start}
                      style={{textAlign: "center"}}>
-                    <IconButton color="primary"
+                    <IconButton color="primary" disabled={(this.state.counter < 2) & (this.state.started)}
                     >
                         <KeyboardVoiceIcon style={{fontSize: 60}}/>
                     </IconButton>
                 </div>
                 <Typography color="primary">{'Record ' + (this.props.N - this.state.base64data_array.length) + ' more times for accurate results.'}</Typography>
-                <Typography color="primary">{(this.state.seconds < 10) ? '0' + this.state.seconds : this.state.milliseconds} : {(this.state.milliseconds < 10) ? '0' + this.state.milliseconds : this.state.milliseconds}</Typography>
+                <Typography color="primary">{this.state.counter}</Typography>
                 <Typography color="primary">{this.state.pending ? <Loading/> : ''}</Typography>
                 <Typography color="primary">{this.state.test_completed ? <>Chance of having COVID:
                     {this.round(this.state.covid_positive)}% <br/><i>Remember that this is an initial screening and does<b> not </b>replace

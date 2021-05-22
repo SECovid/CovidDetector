@@ -22,6 +22,7 @@ export default class Recorder extends React.Component {
             pending: false,
             recordState: null,
             counter: 0,
+            started: false,
             test_completed: false,
             covid_positive: null,
             covid_negative: null,
@@ -54,7 +55,7 @@ export default class Recorder extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.counter>2 && this.state.started){
+        if(this.state.counter==2 && this.state.started){
             this.stop()
         }
     }
@@ -133,6 +134,7 @@ export default class Recorder extends React.Component {
                 backgroundColor="rgb(255,255,255)"
                 foregroundColor="rgb(0,0,0)"
             />
+            {this.state.started?<Typography color="primary" variant="h4" className="blink_me">Cough now</Typography>:''}
             <div onClick={(recordState === RecordState.START) ? this.stop : this.start}
                  style={{textAlign: "center"}}>
                 <IconButton color="primary" disabled={(this.state.counter < 2) & (this.state.started)}

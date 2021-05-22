@@ -14,6 +14,7 @@ import {
 import HelpOutPage from "./pages/HelpOutPage";
 import AdminPage from "./pages/AdminPage";
 import adminTheme from "./themes/index";
+import Footer from "./components/footer";
 
 
 const theme = createMuiTheme({
@@ -26,7 +27,7 @@ const theme = createMuiTheme({
         },
     },
     typography: {
-        fontSize: 14,
+        fontSize: 16,
         fontFamily: [
             "Roboto", "Helvetica", "Arial", 'sans-serif',
         ].join(','),
@@ -47,34 +48,49 @@ class App extends React.Component {
                 <Switch>
                     <Route path="/Login">
                         <ThemeProvider theme={theme}>
+                            <div style={{minHeight: '100vh', position: 'relative'}}>
                             <NavBar/>
                             <LoginPage/>
+                            </div>
+                            <Footer/>
                         </ThemeProvider>
                     </Route>
                     <Route path="/history">
                         <ThemeProvider theme={theme}>
+                            <div style={{minHeight: '100vh', position: 'relative'}}>
                             <NavBar/>
                             <HistoryPage/>
+                            </div>
+                            <Footer/>
                         </ThemeProvider>
                     </Route>
                     <Route path="/admin">
                         <ThemeProvider theme={theme}>
+                            <div style={{minHeight: '100vh', position: 'relative'}}>
                             <NavBar/>
                             <ThemeProvider theme={adminTheme}>
                                 <AdminPage/>
                             </ThemeProvider>
+                            </div>
+                            <Footer/>
                         </ThemeProvider>
                     </Route>
                     <Route path="/helpOut">
                         <ThemeProvider theme={theme}>
+                            <div style={{minHeight: '100vh', position: 'relative'}}>
                             <NavBar/>
                             <HelpOutPage/>
+                            </div>
+                            <Footer/>
                         </ThemeProvider>
                     </Route>
                     <Route path="/">
                         <ThemeProvider theme={theme}>
+                            <div style={{minHeight: '100vh'}}>
                             <NavBar/>
                             <RecordPage/>
+                            </div>
+                            <Footer/>
                         </ThemeProvider>
                     </Route>
 

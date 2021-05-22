@@ -1,12 +1,22 @@
 .audio-react-recorder canvas{
   border-radius: 25px;
  // background: #2962ff;;
-  background-image: url(../images/cough.jpeg);
+  background-image: url(../images/cough.jpg);
   background-repeat: no-repeat;
   background-position: center;
   padding: 2px;
   width: 500px;
   height: 280px;
+}
+
+.blink_me {
+  animation: blinker 0.5s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
 
 .base-container {

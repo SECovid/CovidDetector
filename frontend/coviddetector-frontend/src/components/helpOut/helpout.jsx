@@ -9,6 +9,7 @@ import '../styles.scss'
 import isLoggedIn from "../../functions/isLoggedIn";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Loading from "../../functions/loading";
 
 
 export default class Helpout extends React.Component {
@@ -20,6 +21,7 @@ export default class Helpout extends React.Component {
             date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
         this.state = {
+            pending: false,
             recordState: null,
             counter: 0,
             started: false,
@@ -53,8 +55,9 @@ export default class Helpout extends React.Component {
         })
     }
 
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.counter>2 && this.state.started){
+        if (this.state.counter == 2 && this.state.started) {
             this.stop()
         }
     }
@@ -77,11 +80,13 @@ export default class Helpout extends React.Component {
             var base64data = reader.result;
             base64data = base64data.substr(base64data.indexOf(',') + 1);
             if (isLoggedIn()) {
+                this.setState({pending: true})
                 send_request('medical/upload_medical_test', 'POST', {
                     'data': base64data,
                     'test_result': (this.state.test_result ? 1 : 0)
                 }).then(r => {
                     this.updateStates()
+                    this.setState({pending: false});
                     console.log(r);
 
                 })
@@ -103,14 +108,17 @@ export default class Helpout extends React.Component {
         const {recordState} = this.state
 
         return (<div className="App">
+
             <Box marginTop={5}
                  style={{
                      backgroundColor: "#2962ff",
                      padding: "50px",
                      borderRadius: "25px",
                      borderColor: "#ffffff",
-                     borderWidth: "2px"
+                     borderWidth: "2px",
+                     boxShadow: "0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19)",
                  }}>
+
                 <Typography color="primary">Did you test positive or negative for COVID on your medical
                     test?</Typography>
                 <Grid component="label" container alignItems="center" spacing={1} justify='center'>
@@ -122,7 +130,7 @@ export default class Helpout extends React.Component {
                                                            name="test_result"/>}
                         />
                     </Grid>
-                    <Grid item><Typography color="primary">Positive</Typography></Grid>
+                    <Grid item style={{marginLeft: '-20px'}}><Typography color="primary">Positive</Typography></Grid>
                 </Grid>
                 <AudioReactRecorder
                     state={recordState}
@@ -131,14 +139,19 @@ export default class Helpout extends React.Component {
                     backgroundColor="rgb(255,255,255)"
                     foregroundColor="rgb(0,0,0)"
                 />
+                {this.state.started ?
+                    <Typography color="primary" variant="h4" className="blink_me">Cough now</Typography> : ''}
                 <div onClick={(recordState === RecordState.START) ? this.stop : this.start}
-                     style={{textAlign: "center"}} >
+                     style={{textAlign: "center"}}>
                     <IconButton color="primary" disabled={(this.state.counter < 2) & (this.state.started)}
                     >
                         <KeyboardVoiceIcon style={{fontSize: 60}}/>
                     </IconButton>
                 </div>
+                <Typography
+                    color="primary">{this.state.counter}</Typography>
                 <Typography color="primary">{this.state.seconds}</Typography>
+                <Typography color="primary">{this.state.pending ? <Loading/> : ''}</Typography>
                 <Typography color="primary">{this.state.test_completed ? <>Thank you for your
                     help!</> : ''} < /Typography>
             </Box>
