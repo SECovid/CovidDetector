@@ -55,7 +55,7 @@ export default class Recorder extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.counter==2 && this.state.started){
+        if(this.state.counter > 2 && this.state.started){
             this.stop()
         }
     }

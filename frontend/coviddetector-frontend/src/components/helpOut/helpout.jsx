@@ -57,13 +57,14 @@ export default class Helpout extends React.Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.counter == 2 && this.state.started) {
+        if (this.state.counter > 2 && this.state.started) {
             this.stop()
         }
     }
 
 
     updateStates = (results) => {
+        this.props.updateData()
         this.setState({
             test_completed: true,
         });

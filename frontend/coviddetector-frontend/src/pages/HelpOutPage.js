@@ -13,8 +13,17 @@ class HelpOutPage extends React.Component {
     }
 
     componentDidMount() {
-        send_request('admin/training_data','GET').then(
+        send_request('admin/total_training_data','GET').then(
             res => {
+                this.setState({dataCount: res['data']['size']})
+            }
+        )
+    }
+
+    updateData = () =>{
+        send_request('admin/total_training_data','GET').then(
+            res => {
+                console.log(this)
                 this.setState({dataCount: res['data']['size']})
             }
         )
@@ -24,7 +33,7 @@ class HelpOutPage extends React.Component {
         return (<Box container spacing={2} justify="center">
                 <Typography align='center' variant='h3' color='secondary'>Join the {this.state.dataCount} people that have helped us out already </Typography>
                 <Typography align='center' variant='h1' color='secondary'>Record now!</Typography>
-                <Helpout/>
+                <Helpout updateData={this.updateData}/>
             </Box>
         )
     }

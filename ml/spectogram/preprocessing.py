@@ -47,9 +47,11 @@ def find_cough_start(spectrogram):
 def fix_cough_length(spectrogram):
     #If longer than cough length: TRIM
     if(spectrogram.shape[1]>COUGH_LENGTH):
+        print("Long")
         return spectrogram[:, 0:COUGH_LENGTH]
     #IF smaller than cough length extend with silent bands
     elif(spectrogram.shape[1]<COUGH_LENGTH):
+        print("Short")
 
         number_of_needed_silent_columns = COUGH_LENGTH - spectrogram.shape[1]
         silent_columns = np.zeros((spectrogram.shape[0], number_of_needed_silent_columns))
