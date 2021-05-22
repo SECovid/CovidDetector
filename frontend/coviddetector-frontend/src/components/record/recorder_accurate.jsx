@@ -27,6 +27,7 @@ export default class RecorderAccurate extends React.Component {
             counter: 0,
             started: false,
             test_completed: false,
+            cough_found: false,
             covid_positive: null,
             covid_negative: null,
             currentDate: date
@@ -59,18 +60,26 @@ export default class RecorderAccurate extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.counter>2 && this.state.started){
+        if (this.state.counter > 2 && this.state.started) {
             this.stop()
         }
     }
 
     updateStates = (results) => {
-        this.setState({
-            test_completed: true,
-            covid_negative: results[0][0],
-            covid_positive: results[0][1]
-        });
+        if (results.length == 0) {
+            this.setState({
+                test_completed: true,
+                cough_found: false,
+            })
 
+        } else {
+            this.setState({
+                test_completed: true,
+                cough_found: true,
+                covid_negative: results[0][0],
+                covid_positive: results[0][1]
+            });
+        }
 
     }
 
@@ -144,7 +153,8 @@ export default class RecorderAccurate extends React.Component {
                     foregroundColor="rgb(0,0,0)"
                 />
 
-                {this.state.started?<Typography color="primary" variant="h4" className="blink_me">Cough now</Typography>:''}
+                {this.state.started ?
+                    <Typography color="primary" variant="h4" className="blink_me">Cough now</Typography> : ''}
                 <div onClick={(recordState === RecordState.START) ? this.stop : this.start}
                      style={{textAlign: "center"}}>
                     <IconButton color="primary" disabled={(this.state.counter < 2) & (this.state.started)}
@@ -152,12 +162,14 @@ export default class RecorderAccurate extends React.Component {
                         <KeyboardVoiceIcon style={{fontSize: 60}}/>
                     </IconButton>
                 </div>
-                <Typography color="primary">{'Record ' + (this.props.N - this.state.base64data_array.length) + ' more times for accurate results.'}</Typography>
+                <Typography
+                    color="primary">{this.state.test_completed?'':'Record ' + (this.props.N - this.state.base64data_array.length) + ' more times for accurate results.'}</Typography>
                 <Typography color="primary">{this.state.counter}</Typography>
                 <Typography color="primary">{this.state.pending ? <Loading/> : ''}</Typography>
-                <Typography color="primary">{this.state.test_completed ? <>Chance of having COVID:
-                    {this.round(this.state.covid_positive)}% <br/><i>Remember that this is an initial screening and does<b> not </b>replace
-                        traditional tests</i></> : ''} < /Typography></>)
+                <Typography color="primary">{(this.state.cough_found) ? <>Chance of having COVID:
+                    {this.round(this.state.covid_positive)}% <br/><i>Remember that this is an initial screening and
+                        does<b> not </b>replace traditional
+                        tests</i></> : (this.state.test_completed) ? "Cough not found! Please try again" : ''}< /Typography></>)
 
     }
 }

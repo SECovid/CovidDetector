@@ -64,10 +64,18 @@ export default class Helpout extends React.Component {
 
 
     updateStates = (results) => {
-        this.props.updateData()
-        this.setState({
-            test_completed: true,
-        });
+        if (results=="failed") {
+            this.setState({
+                test_completed: true,
+                cough_found: false,
+            })
+
+        } else {
+            this.setState({
+                test_completed: true,
+                cough_found: true
+            });
+        }
 
 
     }
@@ -86,7 +94,8 @@ export default class Helpout extends React.Component {
                     'data': base64data,
                     'test_result': (this.state.test_result ? 1 : 0)
                 }).then(r => {
-                    this.updateStates()
+                    results = r.data.results
+                    this.updateStates(results)
                     this.setState({pending: false});
                     console.log(r);
 
@@ -153,8 +162,8 @@ export default class Helpout extends React.Component {
                     color="primary">{this.state.counter}</Typography>
                 <Typography color="primary">{this.state.seconds}</Typography>
                 <Typography color="primary">{this.state.pending ? <Loading/> : ''}</Typography>
-                <Typography color="primary">{this.state.test_completed ? <>Thank you for your
-                    help!</> : ''} < /Typography>
+                <Typography color="primary">{this.state.cough_found ? <>Thank you for your
+                    help!</> : this.state.test_completed? <> Cough not found! Please try again </>:''} < /Typography>
             </Box>
         </div>)
 
