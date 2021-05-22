@@ -41,14 +41,16 @@ def upload_medical_test():
 def get_medical_tests():
     try:
         print('HELLO')
-        data = dataset.get_date_and_label()
+        data = list(dataset.get_all_data())
         print('GOT DATA')
-        print('Data: ',list(data))
-
+        info = []
+        for datapoint in data:
+            info.append((datapoint["date"],datapoint["label"]))
+        print(info)
         responseObject = {
             'status': 'success',
             'message': 'Successfully logged in.',
-            'data': data
+            'data': info
         }
         return make_response(jsonify(responseObject)), 200
 

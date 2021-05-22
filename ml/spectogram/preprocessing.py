@@ -77,7 +77,8 @@ def preprocess_cough(spectrogram):
 
     #Get cough start index using the no noise spectrogram
     cough_start_index = find_cough_start(no_noise_spectrogram)
-
+    if(cough_start_index == 0):
+        raise Exception("Cough not found")
     #Align original spectrogram
     aligned_spectrogram = normalized_spectrogram[:, cough_start_index:]
 

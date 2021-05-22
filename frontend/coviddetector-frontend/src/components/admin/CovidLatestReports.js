@@ -63,33 +63,33 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 export default function CovidLastReports(props) {
     const classes = useStyles();
-    const [date, setDate] = useState(0);
-    const [status, setStatus] = useState('Waiting');
-    const retrainModel= () =>{
-        //let utcDate = new Date(Date.UTC(2018, 11, 1, 0, 0, 0));
-        var jsDate = new Date(date)
-        var utcDate = jsDate.toUTCString()
-        var body = {'date':utcDate}
-        console.log(utcDate)
-
-        send_request('admin/retrain','POST',body).then(
+    const [medicalTests, setMedicalTests] = useState([]);
+    const getMedicalTests= () =>{
+        send_request('medical/get_medical_tests','GET').then(
             res => {
-                console.log(res)
-                setStatus(res["data"]["message"])
+                console.log("MEDICAL TESTS : ")
+                var data = res['data']['data'].reverse()
+                console.log(res['data']['data'][0])
+
+                if(JSON.stringify(data)!=JSON.stringify(medicalTests)){
+                    console.log("DIFFERENT")
+                    setMedicalTests(data)
+                }
             }
         )
     }
+    useEffect(() => {
+       getMedicalTests()
+    },[medicalTests])
 
-    const handleChange = (event) => {
-        console.log(event.target.value)
-        setDate(event.target.value);  }
+
     return (
         <Card {...props}>
             <CardHeader  title="Latest medical reports"/>
             <Divider />
             <CardContent>
-                <TableContainer component={Paper} style={{marginTop: '1em'}}>
-                    <Table className={classes.table} aria-label="simple table">
+                <TableContainer component={Paper} style={{marginTop: '1em',maxHeight: 200}}>
+                    <Table className={classes.table} aria-label="simple table" stickyHeader >
                         <TableHead>
                             <StyledTableRow>
                                 <StyledTableCell width={250} align="center">Date</StyledTableCell>
@@ -97,7 +97,12 @@ export default function CovidLastReports(props) {
                             </StyledTableRow>
                         </TableHead>
                         <TableBody>
-
+                            {medicalTests.map((row) => (
+                                <StyledTableRow key={row.report_id}>
+                                    <StyledTableCell align="center">{row[0]}</StyledTableCell>
+                                    <StyledTableCell align="center">{row[1]?"Covid":"No Covid"}</StyledTableCell>
+                                </StyledTableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>

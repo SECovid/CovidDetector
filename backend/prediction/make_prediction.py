@@ -41,8 +41,7 @@ def make_fast_prediction():
             database.add_covid_report(request.json)
         return json.dumps({"results": result.tolist()})
 
-    except NameError:
-        print(NameError)
+    except:
         return json.dumps({"results": []})
 
 

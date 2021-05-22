@@ -14,6 +14,8 @@ def get_date_and_label():
     data = collection.find({},{ "_id": 0, "date": 1, "label": 1 ,"spectrogram":0})
     print('GETTING ALL DATA' ,data)
     return data
+
+
 def get_all_data_size(date = dt.datetime.utcnow()):
     data = collection.estimated_document_count()
     return data

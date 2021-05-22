@@ -75,5 +75,59 @@ def retraining_pipeline(date=dt.datetime.utcnow()):
     return 'TRAINED'
 
 
+from ml.data import dataset
+import datetime as dt
+import numpy as np
+from ml.model import log
+import random
+
+def force_retraining(date=dt.datetime.utcnow()):
+    # Get data
+    data = list(dataset.get_all_data(date))
+    print('DATA SIZE ',len(data))
+    random.shuffle(data)
+    # Number of training points
+    current_training_size = len(data)
+
+    # Transform into two arrays
+    labels = np.array([datapoint['label'] for datapoint in data])
+    # Retrieving all spectrograms and reshaping them to numpy arrays
+    spectrograms = np.reshape(
+        np.array([np.frombuffer(datapoint['spectrogram'], dtype=np.float32) for datapoint in data]), (-1, 1025, 69))
+    print('shape: ',spectrograms.shape)
+
+    # Check if balanced
+    positive_recordings = np.count_nonzero(labels)
+    negative_recordings = current_training_size - positive_recordings
+    print('pos: ',positive_recordings)
+    print('neg: ',negative_recordings)
+
+    #Update current training size
+    print(labels)
+    current_training_size = labels.shape[0]
+
+
+    # Check if enough data
+    # Extract previous model's training size
+    previous_training_size = log.getSizeFromLogs()
+    print('CUrrent',current_training_size )
+    print('previous ',previous_training_size)
+    # Compare new size with old size and check if enough
+    print('Number of new datapoints: ', (current_training_size - previous_training_size))
+
+    # import train model and train the model
+    print('Initiating retraining ...')
+    from ml.model import train_model
+    # Reshaping spectrograms for training
+    spectrograms = np.reshape(spectrograms, (spectrograms.shape[0], spectrograms.shape[1], spectrograms.shape[2], 1))
+    train_model.create_model(spectrograms,labels)
+    print('Retraining done ...')
+    return 'TRAINED'
+
+
+if __name__ == "__main__":
+    retraining_pipeline()
+
+
 if __name__ == "__main__":
     retraining_pipeline()

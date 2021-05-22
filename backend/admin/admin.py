@@ -19,9 +19,9 @@ def retrain():
         post_data = request.json
 
         try:
-            res = retraining_model.retraining_pipeline(post_data['date'])
+            res = retraining_model.force_retraining(post_data['date'])
         except:
-            res = retraining_model.retraining_pipeline()
+            res = retraining_model.force_retraining()
 
         if(res == "TRAINED"):
             responseObject = {
