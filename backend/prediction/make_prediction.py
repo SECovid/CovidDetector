@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_cors import cross_origin
 from ml.prediction import predict_covid
-from ml.spectogram import audio_processing
+from ml.spectrogram import audio_processing
 from flask import Flask, request, jsonify
 from backend.authentication import authentication
 from backend import database

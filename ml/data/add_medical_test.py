@@ -1,4 +1,4 @@
-from ml.spectogram import audio_processing
+from ml.spectrogram import audio_processing
 from ml.model import retraining_model
 from ml.data import dataset
 import datetime as dt

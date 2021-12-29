@@ -1,5 +1,5 @@
 from flask import Blueprint, make_response
-from ml.spectogram import audio_processing
+from ml.spectrogram import audio_processing
 from ml.data import add_medical_test
 from ml.data import dataset
 from flask import Flask, request, jsonify

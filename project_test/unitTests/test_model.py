@@ -1,6 +1,6 @@
 import unittest
 from tensorflow import keras
-from ml.spectogram import audio_processing
+from ml.spectrogram import audio_processing
 from ml.prediction import predict_covid
 from ml.data import dataset
 import time
